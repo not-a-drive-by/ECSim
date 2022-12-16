@@ -22,6 +22,9 @@ public class Task {
    //处理完后设置
    private int finishTime=-1;//若为-1则未完成
 
+   //偏好列表
+   public double[] preferenceList;
+
    public Task(int length, int memo, int CPU, int storage, int taskID) {
       this.length = length;
       this.memo = memo;

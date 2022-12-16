@@ -17,6 +17,7 @@ public class EdgeDataCenter {
     private List<EdgeHost> localHosts;
     private List<EdgeVM> localVM;
     private List<List<Task>> queue;
+    private int[] pref;
 
     public EdgeDataCenter(int _id){
         this.id = _id;
@@ -57,6 +58,11 @@ public class EdgeDataCenter {
         int[][] feasableMatrix = createMatrix();
         int[] selectedVM = selectVM(feasableMatrix);
         createVMs(selectedVM);
+
+    }
+
+    //更新偏好序列
+    public void updatePreference(){
 
     }
 
