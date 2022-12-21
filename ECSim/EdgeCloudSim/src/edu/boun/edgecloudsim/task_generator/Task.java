@@ -7,10 +7,12 @@ package edu.boun.edgecloudsim.task_generator;
 
 //public class Task extends Cloudlet {
 
-public class Task {
+import java.io.Serializable;
+
+public class Task implements Serializable {//序列化后才能从文件读出
    //自身属性
    private int length;
-   private int memo;
+   private int RAM;
    private int CPU;
    private int storage;
 
@@ -25,9 +27,16 @@ public class Task {
    //偏好列表
    public double[] preferenceList;
 
-   public Task(int length, int memo, int CPU, int storage, int taskID) {
+   public Task(int length, int RAM, int CPU, int storage) {
       this.length = length;
-      this.memo = memo;
+      this.RAM = RAM;
+      this.CPU = CPU;
+      this.storage = storage;
+   }
+
+   public Task(int length, int RAM, int CPU, int storage, int taskID) {
+      this.length = length;
+      this.RAM = RAM;
       this.CPU = CPU;
       this.storage = storage;
       this.taskID = taskID;
@@ -37,9 +46,9 @@ public class Task {
 
    public void setLength(int length) {      this.length = length;   }
 
-   public int getMemo() {      return memo;   }
+   public int getRAM() {      return RAM;   }
 
-   public void setMemo(int memo) {      this.memo = memo;   }
+   public void setRAM(int RAM) {      this.RAM = RAM;   }
 
    public int getCPU() {      return CPU;   }
 
@@ -64,4 +73,14 @@ public class Task {
    public int getFinishTime() {      return finishTime;   }
 
    public void setFinishTime(int finishTime) {      this.finishTime = finishTime;   }
+
+   @Override
+   public String toString() {
+      return "Task{" +
+              "length=" + length +
+              ", RAM=" + RAM +
+              ", CPU=" + CPU +
+              ", storage=" + storage +
+              '}';
+   }
 }

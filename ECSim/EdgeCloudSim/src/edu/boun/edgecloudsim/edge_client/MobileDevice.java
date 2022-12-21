@@ -1,18 +1,16 @@
 package edu.boun.edgecloudsim.edge_client;
 
-import edu.boun.edgecloudsim.task_generator.IdelActiveGeneratorModel;
-import edu.boun.edgecloudsim.task_generator.LoadGeneratorModel;
+import edu.boun.edgecloudsim.task_generator.TaskGeneratorModel;
 import edu.boun.edgecloudsim.task_generator.Task;
-
-import java.lang.reflect.Array;
 
 public class MobileDevice {
     //每个设备有一个产生任务的对象
-    private IdelActiveGeneratorModel taskGenerator;
+//    private TaskGeneratorModel taskGenerator;
 
     //设备自身状态信息
-    private int x_pos;
-    private int y_pos;
+    private int mobileID;
+    private double x_pos;
+    private double y_pos;
     private int power;//发射功率
 
     //任务队列 假设都是三种
@@ -22,15 +20,22 @@ public class MobileDevice {
 
     private int[] quota;
 
-
-
-    public void MobileDevice(int _x, int _y, int[] _quota) {
+    public MobileDevice(double _x, double _y, int _mobileID) {
         //初始化参数
         this.x_pos = _x;
         this.y_pos = _y;
-        this.quota = _quota;
+        this.mobileID = _mobileID;
 
         //每个设备有一个产生任务的对象
-        taskGenerator = new IdelActiveGeneratorModel();
+//        taskGenerator = new TaskGeneratorModel();
+    }
+
+    @Override
+    public String toString() {
+        return "MobileDevice{" +
+                "mobileID=" + mobileID +
+                ", x_pos=" + x_pos +
+                ", y_pos=" + y_pos +
+                '}';
     }
 }

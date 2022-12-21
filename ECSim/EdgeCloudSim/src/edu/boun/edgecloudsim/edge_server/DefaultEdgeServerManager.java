@@ -43,7 +43,7 @@ public class DefaultEdgeServerManager extends EdgeServerManager{
     @Override
     //创建xml文件中所有的Datacenters
     public void startDatacenters() throws Exception {
-        Document doc = SimSettings.getInstance().getEdgeDevicesDocument();
+        Document doc = SimSettings.getInstance().getEdgeServersDocument();
         NodeList datacenterList = doc.getElementsByTagName("datacenter");
         for (int i = 0; i < datacenterList.getLength(); i++) {
             Node datacenterNode = datacenterList.item(i);
