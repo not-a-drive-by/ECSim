@@ -13,17 +13,26 @@ import java.util.List;
 
 public class EdgeDataCenter {
 
-    private int id;
-    private List<EdgeHost> localHosts;
-    private List<EdgeVM> localVM;
-    private List<List<Task>> queue;
+    //自身属性
+    public int id;
+    public int CPU;
+    public int RAM;
+    public int storage;
+    public double x_pos;
+    public double y_pos;
+
+    private List<Task> queue1;
+    private List<Task> queue2;
+    private List<Task> queue3;
     private int[] pref;
 
-    public EdgeDataCenter(int _id){
+    public EdgeDataCenter(int _id, int _CPU, int _RAM, int _storage, double x, double y){
         this.id = _id;
-        this.localVM = new ArrayList<EdgeVM>();
-        //localHosts要根据Element datacenterElement产生
-        //queue要根据xml确定支持的虚拟机种类
+        this.CPU = _CPU;
+        this.RAM = _RAM;
+        this.storage = _storage;
+        this.x_pos = x;
+        this.y_pos = y;
     }
 
     //接收移动设备提交的Task，放入queue并排序
@@ -69,5 +78,17 @@ public class EdgeDataCenter {
     //关闭所有的Host和VM
     public void shutdownEntity(){
 
+    }
+
+    @Override
+    public String toString() {
+        return "EdgeDataCenter{" +
+                "id=" + id +
+                ", CPU=" + CPU +
+                ", RAM=" + RAM +
+                ", storage=" + storage +
+                ", x_pos=" + x_pos +
+                ", y_pos=" + y_pos +
+                '}' + "\r\n";
     }
 }

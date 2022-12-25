@@ -33,8 +33,8 @@ public class SimSettings {
     //边缘计算节点参数
     private Document edgeServersDoc = null;
     private String edgeServersFile = "ECSim/EdgeCloudSim/scripts/sample_app1/config/edge_servers.xml";
-    public int EdgeDeviceNum;
-    public ArrayList<DeviceTaskStatic> EdgeDeviceStatic = new ArrayList<>();
+    public int EdgeServerNum;
+    public ArrayList<DeviceTaskStatic> EdgeDServersStatic = new ArrayList<>();
     public Document getEdgeServersDocument(){
         return edgeServersDoc;
     }
@@ -79,6 +79,7 @@ public class SimSettings {
                 Node user = userList.item(i);
                 Element mobileDeviceElement = (Element) user;
 
+                int deviceID = Integer.parseInt(mobileDeviceElement.getElementsByTagName("userID").item(0).getTextContent());
                 int taskNum = Integer.parseInt(mobileDeviceElement.getElementsByTagName("taskNum").item(0).getTextContent());
                 double type1Ratio = Double.parseDouble(mobileDeviceElement.getElementsByTagName("type1Ratio").item(0).getTextContent());
                 double type2Ratio = Double.parseDouble(mobileDeviceElement.getElementsByTagName("type2Ratio").item(0).getTextContent());
@@ -91,7 +92,7 @@ public class SimSettings {
                 double y = Double.parseDouble(location.getElementsByTagName("y_pos").item(0).getTextContent());
 
 
-                DeviceTaskStatic userStatic = new DeviceTaskStatic(taskNum,type1Ratio,type2Ratio,type3Ratio,Len1,Len2,Len3,x,y);
+                DeviceTaskStatic userStatic = new DeviceTaskStatic(taskNum,type1Ratio,type2Ratio,type3Ratio,Len1,Len2,Len3,x,y,deviceID);
                 mobileDeviceStatic.add(userStatic);
 
             }

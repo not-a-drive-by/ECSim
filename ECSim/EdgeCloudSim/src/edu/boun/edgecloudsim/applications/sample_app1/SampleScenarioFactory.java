@@ -8,10 +8,7 @@ import edu.boun.edgecloudsim.core.ScenarioFactory;
 import edu.boun.edgecloudsim.edge_client.MobileDeviceManager;
 import edu.boun.edgecloudsim.edge_orchestrator.DefaultEdgeOrchestrator;
 import edu.boun.edgecloudsim.edge_orchestrator.EdgeOrchestrator;
-import edu.boun.edgecloudsim.edge_server.DefaultEdgeServerManager;
 import edu.boun.edgecloudsim.edge_server.EdgeServerManager;
-import edu.boun.edgecloudsim.mobility.MobilityModel;
-import edu.boun.edgecloudsim.network.NetworkModel;
 
 public class SampleScenarioFactory implements ScenarioFactory {
 
@@ -19,6 +16,10 @@ public class SampleScenarioFactory implements ScenarioFactory {
     private double simulationTime;
     private String orchestratorPolicy;
     private String simScenario;
+
+    SampleScenarioFactory(){
+
+    }
 
     SampleScenarioFactory(int _numOfMobileDevice,
                           double _simulationTime,
@@ -49,7 +50,7 @@ public class SampleScenarioFactory implements ScenarioFactory {
 
     @Override
     public EdgeServerManager getEdgeServerManager() {
-        return new DefaultEdgeServerManager();
+        return new EdgeServerManager();
     }
 
     @Override

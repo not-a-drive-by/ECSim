@@ -16,7 +16,7 @@ public class Task implements Serializable {//序列化后才能从文件读出
    private int CPU;
    private int storage;
 
-   //由LoadGenerator设置
+   //由初始化设置
    private int taskID;
    private int deviceID;
    private int arrivalTime;
@@ -81,6 +81,7 @@ public class Task implements Serializable {//序列化后才能从文件读出
               ", RAM=" + RAM +
               ", CPU=" + CPU +
               ", storage=" + storage +
-              '}';
+              ", taskID=" + taskID +
+              '}' + "\r\n";
    }
 }

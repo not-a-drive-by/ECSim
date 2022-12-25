@@ -2,6 +2,7 @@ package edu.boun.edgecloudsim.task_generator;
 
 public class DeviceTaskStatic {
     public int taskNum;
+    public int deviceID;
 
     public double type1Ratio;
     public double type2Ratio;
@@ -16,8 +17,9 @@ public class DeviceTaskStatic {
 
     public DeviceTaskStatic(int taskNum, double type1Ratio, double type2Ratio, double type3Ratio,
                             int meanLen1, int meanLen2, int meanLen3,
-                            double x, double y) {
+                            double x, double y, int deviceID) {
         this.taskNum = taskNum;
+        this.deviceID = deviceID;
         this.type1Ratio = type1Ratio;
         this.type2Ratio = type2Ratio;
         this.type3Ratio = type3Ratio;
@@ -32,6 +34,7 @@ public class DeviceTaskStatic {
     public String toString() {
         return "DeviceTaskStatic{" +
                 "taskNum=" + taskNum +
+                ", deviceID=" + deviceID +
                 ", type1Ratio=" + type1Ratio +
                 ", type2Ratio=" + type2Ratio +
                 ", type3Ratio=" + type3Ratio +

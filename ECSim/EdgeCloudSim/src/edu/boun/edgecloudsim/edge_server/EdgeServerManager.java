@@ -1,42 +1,59 @@
-/*
-* EdgeServerManager可以获得全局EdgeServer的信息
-* 每个EdgeServer有一个DataCenter
-* DataCenter用来操作Host和VM
-*/
 package edu.boun.edgecloudsim.edge_server;
 
+import edu.boun.edgecloudsim.core.SimSettings;
+import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class EdgeServerManager {
-    protected List<EdgeDataCenter> localDatacenters;
-    protected List<List<EdgeVM>> vmList;
+public class EdgeServerManager {
 
-    public EdgeServerManager() {
-        this.localDatacenters=new ArrayList<EdgeDataCenter>();
-        this.vmList = new ArrayList<List<EdgeVM>>();
+    public List<EdgeDataCenter> edgeServersList = new ArrayList<EdgeDataCenter>();
+
+    public void init() throws Exception {
+        startDatacenters();
+
     }
 
-    //根据HostID在列表中找到对应位置的VMList
-    public List<EdgeVM> getVmList(int hostId){
-        return vmList.get(hostId);
+
+
+    //创建单个datacenter
+    public EdgeDataCenter createDatacenter(Element datacenterElement){
+        //datacenterElement可以提供其他相关的构造参数
+        int id = Integer.parseInt(datacenterElement.getElementsByTagName("serverID").item(0).getTextContent());
+        Element location = (Element)datacenterElement.getElementsByTagName("location").item(0);
+        double x_pos = Double.parseDouble(location.getElementsByTagName("x_pos").item(0).getTextContent());
+        double y_pos = Double.parseDouble(location.getElementsByTagName("y_pos").item(0).getTextContent());
+        Element host = (Element)datacenterElement.getElementsByTagName("host").item(0);
+        int CPU = Integer.parseInt(host.getElementsByTagName("core").item(0).getTextContent());
+        int RAM = Integer.parseInt(host.getElementsByTagName("ram").item(0).getTextContent());
+        int storage = Integer.parseInt(host.getElementsByTagName("storage").item(0).getTextContent());
+        return new EdgeDataCenter( id, CPU, RAM, storage, x_pos, y_pos );
     }
 
-    public List<EdgeDataCenter> getDatacenterList(){
-        return localDatacenters;
+    //创建所有datacenters时调用创建VM、Host、单个datacenter
+    //创建xml文件中所有的Datacenters
+    public void startDatacenters() throws Exception {
+        Document doc = SimSettings.getInstance().getEdgeServersDocument();
+        NodeList datacenterList = doc.getElementsByTagName("datacenter");
+        for (int i = 0; i < datacenterList.getLength(); i++) {
+            Node datacenterNode = datacenterList.item(i);
+            Element datacenterElement = (Element) datacenterNode;
+            edgeServersList.add(createDatacenter(datacenterElement));
+        }
     }
 
-    public abstract void initialize();
 
-    public abstract void startDatacenters() throws Exception;
 
-    public abstract void terminateDatacenters();
-
-    public abstract List<EdgeHost> createAllHosts(Element datacenterElement);
-
-    public abstract void createVmListForAllHosts(int hostId);
+    //关闭localDatacenters中所有的Datacenter
+    public void terminateDatacenters() {
+        for(EdgeDataCenter dataCenter: edgeServersList){
+            dataCenter.shutdownEntity();
+        }
+    }
 
 
 }

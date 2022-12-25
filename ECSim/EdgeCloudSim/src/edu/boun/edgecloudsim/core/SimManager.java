@@ -22,5 +22,17 @@ public class SimManager {
     public SimManager(ScenarioFactory _scenarioFactory, int _numOfMobileDevice, String _simScenario, String _orchestratorPolicy) throws Exception {
         simScenario = _simScenario;
         scenarioFactory = _scenarioFactory;
+
+        //创建服务器
+        System.out.println("Init Edge Servers" + "\r\n");
+        EdgeServerManager edgeServerManager = scenarioFactory.getEdgeServerManager();
+        edgeServerManager.init();
+        System.out.println(edgeServerManager.edgeServersList);
+
+        //创建移动设备
+        System.out.println("Init Mobile Devices" + "\r\n");
+        MobileDeviceManager mobileDeviceManager = scenarioFactory.getMobileDeviceManager();
+        mobileDeviceManager.initMobileDevice();
+        System.out.println(mobileDeviceManager.mobileDevicesList);
     }
 }

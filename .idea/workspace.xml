@@ -3,14 +3,12 @@
   <component name="ChangeListManager">
     <list default="true" id="18a26140-92e0-43de-8a37-25fa308ba712" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TaskInformation.txt" beforeDir="false" afterPath="$PROJECT_DIR$/TaskInformation.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/ECSim _ada/edu/boun/edgecloudsim/applications/sample_app1/sample1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ECSim _ada/edu/boun/edgecloudsim/applications/sample_app1/sample1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/ECSim _ada/edu/boun/edgecloudsim/core/SimSettings.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ECSim _ada/edu/boun/edgecloudsim/core/SimSettings.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/ECSim _ada/edu/boun/edgecloudsim/edge_client/MobileDevice.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ECSim _ada/edu/boun/edgecloudsim/edge_client/MobileDevice.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/ECSim _ada/edu/boun/edgecloudsim/edge_client/MobileDeviceManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ECSim _ada/edu/boun/edgecloudsim/edge_client/MobileDeviceManager.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/ECSim _ada/edu/boun/edgecloudsim/edge_server/DefaultEdgeServerManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ECSim _ada/edu/boun/edgecloudsim/edge_server/DefaultEdgeServerManager.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/ECSim _ada/edu/boun/edgecloudsim/task_generator/IdelActiveGeneratorModel$TaskComparatorByTime.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/ECSim _ada/edu/boun/edgecloudsim/task_generator/IdelActiveGeneratorModel.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/ECSim _ada/edu/boun/edgecloudsim/task_generator/LoadGeneratorModel.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ECSim _ada/edu/boun/edgecloudsim/edge_server/DefaultEdgeServerManager.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/ECSim _ada/edu/boun/edgecloudsim/task_generator/Task.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ECSim _ada/edu/boun/edgecloudsim/task_generator/Task.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -50,6 +48,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="nodejs_package_manager_path" value="npm" />
   </component>
   <component name="RunManager" selected="Application.sample1">
     <configuration name="TaskGeneratorModel" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
@@ -102,6 +101,7 @@
       <workItem from="1671330007422" duration="7471000" />
       <workItem from="1671433236914" duration="5572000" />
       <workItem from="1671535397173" duration="9934000" />
+      <workItem from="1671765411296" duration="18511000" />
     </task>
     <servers />
   </component>

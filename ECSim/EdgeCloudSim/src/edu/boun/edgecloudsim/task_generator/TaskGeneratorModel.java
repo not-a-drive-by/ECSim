@@ -74,20 +74,21 @@ public class TaskGeneratorModel {
 
     private static ArrayList<List<Task>> produceTask(ArrayList<DeviceTaskStatic> MobileDeviceStatic){
         ArrayList<List<Task>> taskList = new ArrayList<List<Task>>();
+        int taskID = 1;
         for(int i=0; i<MobileDeviceStatic.size(); i++){
             DeviceTaskStatic deviceTaskStatic = MobileDeviceStatic.get(i);
 //            System.out.println(deviceTaskStatic);
-            int taskNum = deviceTaskStatic.taskNum;
+            int taskNum = deviceTaskStatic.taskNum;//一个设备的任务总数
 
             List<Task> tList = new ArrayList<Task>();//每个设备的任务集合
             for(int k=0; k< (int) taskNum*deviceTaskStatic.type1Ratio; k++){
-                tList.add(new Task(deviceTaskStatic.meanLen1, 32, 2, 1690));
+                tList.add(new Task(deviceTaskStatic.meanLen1, 32, 2, 1690, taskID++));
             }
             for(int k=0; k< (int) taskNum*deviceTaskStatic.type2Ratio; k++){
-                tList.add(new Task(deviceTaskStatic.meanLen2, 30, 2, 420));
+                tList.add(new Task(deviceTaskStatic.meanLen2, 30, 2, 420, taskID++));
             }
             for(int k=0; k< (int) taskNum*deviceTaskStatic.type3Ratio; k++){
-                tList.add(new Task(deviceTaskStatic.meanLen2, 7, 2, 1690));
+                tList.add(new Task(deviceTaskStatic.meanLen2, 7, 2, 1690, taskID++));
             }
 
             taskList.add(tList);
