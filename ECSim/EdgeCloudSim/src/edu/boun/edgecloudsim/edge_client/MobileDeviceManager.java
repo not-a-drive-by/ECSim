@@ -24,8 +24,9 @@ public class MobileDeviceManager {
 
     public List<MobileDevice> mobileDevicesList = new ArrayList<MobileDevice>();
     public SimSettings SS = SimSettings.getInstance();
-    private  ArrayList<List<Task>> taskList;
+    private ArrayList<List<Task>> taskList;
 
+    //初始化移动设备
     public void initMobileDevice() throws Exception {
         int MobileDeviceNum = SS.MobileDeviceNum;
         //读出任务
@@ -60,6 +61,24 @@ public class MobileDeviceManager {
     private MobileDevice createMobileDevice(DeviceTaskStatic mobileDeviceStatic, List<Task> tasks){
         return new MobileDevice(mobileDeviceStatic.x_pos, mobileDeviceStatic.y_pos,
                 mobileDeviceStatic.deviceID, tasks);
+    }
+
+    //更新待处理任务
+    public void updateUnprocessedQueues(int t){
+        for( MobileDevice mobileDevice : mobileDevicesList ){
+            mobileDevice.updateDeviceQueue(t);
+        }
+    }
+
+    //更新待卸载任务
+    public void updateUntransQueues(int t){
+        for( MobileDevice mobileDevice : mobileDevicesList ){
+            mobileDevice.updateTransQueue(t);
+        }
+    }
+
+    public void terminateDatacenters() {
+        //local computation is not supported in default Mobile Device Manager
     }
 
 
