@@ -6,7 +6,9 @@
 
 package edu.boun.edgecloudsim.edge_client;
 
+import edu.boun.edgecloudsim.core.ScenarioFactory;
 import edu.boun.edgecloudsim.core.SimSettings;
+import edu.boun.edgecloudsim.network.NetworkModel;
 import edu.boun.edgecloudsim.task_generator.DeviceTaskStatic;
 import edu.boun.edgecloudsim.task_generator.Task;
 import org.w3c.dom.Document;
@@ -22,9 +24,9 @@ import java.util.List;
 
 public class MobileDeviceManager {
 
-    public List<MobileDevice> mobileDevicesList = new ArrayList<MobileDevice>();
+    private List<MobileDevice> mobileDevicesList = new ArrayList<MobileDevice>();
     public SimSettings SS = SimSettings.getInstance();
-    private ArrayList<List<Task>> taskList;
+    private ArrayList<List<Task>> taskList; //从文件读取出来的任务的存放变量
 
     //初始化移动设备
     public void initMobileDevice() throws Exception {
@@ -71,9 +73,9 @@ public class MobileDeviceManager {
     }
 
     //更新待卸载任务
-    public void updateUntransQueues(int t){
+    public void updateUntransQueues(NetworkModel networkModel){
         for( MobileDevice mobileDevice : mobileDevicesList ){
-            mobileDevice.updateTransQueue(t);
+            mobileDevice.updateTransQueue(networkModel);
         }
     }
 
@@ -82,5 +84,6 @@ public class MobileDeviceManager {
     }
 
 
-
+    //无用函数
+    public List<MobileDevice> getMobileDevicesList() {       return mobileDevicesList;    }
 }

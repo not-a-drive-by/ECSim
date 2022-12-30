@@ -9,6 +9,7 @@ import edu.boun.edgecloudsim.edge_client.MobileDeviceManager;
 import edu.boun.edgecloudsim.edge_orchestrator.DefaultEdgeOrchestrator;
 import edu.boun.edgecloudsim.edge_orchestrator.EdgeOrchestrator;
 import edu.boun.edgecloudsim.edge_server.EdgeServerManager;
+import edu.boun.edgecloudsim.network.NetworkModel;
 
 public class SampleScenarioFactory implements ScenarioFactory {
 
@@ -43,10 +44,10 @@ public class SampleScenarioFactory implements ScenarioFactory {
 //        return new NomadicMobility(numOfMobileDevice,simulationTime);
 //    }
 //
-//    @Override
-//    public NetworkModel getNetworkModel() {
-//        return new MM1Queue(numOfMobileDevice, simScenario);
-//    }
+    @Override
+    public NetworkModel getNetworkModel() {
+        return new NetworkModel();
+    }
 
     @Override
     public EdgeServerManager getEdgeServerManager() {

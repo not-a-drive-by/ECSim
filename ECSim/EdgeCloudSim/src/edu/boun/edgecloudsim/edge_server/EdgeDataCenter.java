@@ -14,12 +14,12 @@ import java.util.List;
 public class EdgeDataCenter {
 
     //自身属性
-    public int id;
-    public int CPU;
-    public int RAM;
-    public int storage;
-    public double x_pos;
-    public double y_pos;
+    private int id;
+    private int CPU;
+    private int RAM;
+    private int storage;
+    private double x_pos;
+    private double y_pos;
 
     private List<Task> queue1;
     private List<Task> queue2;
@@ -79,6 +79,13 @@ public class EdgeDataCenter {
     public void shutdownEntity(){
 
     }
+
+    //一些没什么用的方法
+    public double getX() {   return x_pos;    }
+    public void setX(double x_pos) {    this.x_pos = x_pos;    }
+    public double getY() {    return y_pos;    }
+    public void setY(double y_pos) {    this.y_pos = y_pos;    }
+    public int getId(){ return id;}
 
     @Override
     public String toString() {

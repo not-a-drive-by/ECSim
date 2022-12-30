@@ -3,6 +3,7 @@ package edu.boun.edgecloudsim.core;
 import edu.boun.edgecloudsim.edge_client.MobileDeviceManager;
 import edu.boun.edgecloudsim.edge_orchestrator.EdgeOrchestrator;
 import edu.boun.edgecloudsim.edge_server.EdgeServerManager;
+import edu.boun.edgecloudsim.network.NetworkModel;
 
 public interface ScenarioFactory {
 
@@ -19,7 +20,7 @@ public interface ScenarioFactory {
     /**
      * provides abstract Network Model
      */
-//    public NetworkModel getNetworkModel();
+    public NetworkModel getNetworkModel();
 
     /**
      * provides abstract Edge Server Model

@@ -23,7 +23,7 @@ public class sample1 {
         //时隙大循环
         for(int t=0; t<5; t++){
             //1. 更新mobileDevice的待处理待发送队列 edgeServer的待处理队列
-            simManager.updateQueues(t);
+            simManager.updateQueues(t, scenarioFactory);
             //2. 更新mobileDevice的坐标
 
             //3. 更新信道状态

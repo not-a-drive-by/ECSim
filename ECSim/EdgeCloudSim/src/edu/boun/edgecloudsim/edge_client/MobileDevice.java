@@ -1,5 +1,8 @@
 package edu.boun.edgecloudsim.edge_client;
 
+import edu.boun.edgecloudsim.core.ScenarioFactory;
+import edu.boun.edgecloudsim.network.Channel;
+import edu.boun.edgecloudsim.network.NetworkModel;
 import edu.boun.edgecloudsim.task_generator.TaskGeneratorModel;
 import edu.boun.edgecloudsim.task_generator.Task;
 
@@ -35,7 +38,7 @@ public class MobileDevice {
         this.y_pos = _y;
         this.mobileID = _mobileID;
         this.preQueue = tasks;
-
+        this.power = 20;
     }
 
     //更新待处理队列
@@ -58,9 +61,19 @@ public class MobileDevice {
     }
 
     //更新待发送队列
-    public void updateTransQueue(int t){
-
+    public void updateTransQueue(NetworkModel networkModel){
+//        Channel cha = networkModel.serachChannelByDeviceandServer( mobileID, 8001);
+    
     }
+
+
+    //一些无聊的函数
+    public double getX() {  return x_pos;    }
+    public void setX(double x_pos) {  this.x_pos = x_pos;    }
+    public double getY() {    return y_pos;    }
+    public void setY(double y_pos) {    this.y_pos = y_pos;    }
+    public int getPower(){ return power;}
+    public int getMobileID(){   return mobileID; }
 
     @Override
     public String toString() {

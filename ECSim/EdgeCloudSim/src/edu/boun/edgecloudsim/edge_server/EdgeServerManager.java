@@ -11,7 +11,7 @@ import java.util.List;
 
 public class EdgeServerManager {
 
-    public List<EdgeDataCenter> edgeServersList = new ArrayList<EdgeDataCenter>();
+    private List<EdgeDataCenter> edgeServersList = new ArrayList<EdgeDataCenter>();
 
     public void init() throws Exception {
         startDatacenters();
@@ -55,5 +55,5 @@ public class EdgeServerManager {
         }
     }
 
-
+    public List<EdgeDataCenter> getEdgeServersList() {  return edgeServersList;    }
 }
