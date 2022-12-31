@@ -29,7 +29,7 @@ public class sample1 {
             //3. 更新信道状态
 
             //4. 确定移动设备参与匹配的名额
-
+            simManager.generateQuota();
             //5. Edge Orchestrator负责完成设备与服务器之间的匹配
 
             //6. 根据匹配结果开始传输数据包

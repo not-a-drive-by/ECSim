@@ -53,7 +53,10 @@ public class SimManager {
 
         //2.更新移动设备待传输队列
         mobileDeviceManager.updateUntransQueues(networkModel);
+    }
 
+    public void generateQuota(){
+        mobileDeviceManager.updateQuotas(networkModel);
     }
 
     public void shutdownEntity(){

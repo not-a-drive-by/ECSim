@@ -79,6 +79,13 @@ public class MobileDeviceManager {
         }
     }
 
+    //更新队列quota
+    public void updateQuotas(NetworkModel networkModel){
+        for( MobileDevice mobileDevice : mobileDevicesList ){
+            mobileDevice.updateQuota(networkModel);
+        }
+    }
+
     public void terminateDatacenters() {
         //local computation is not supported in default Mobile Device Manager
     }
