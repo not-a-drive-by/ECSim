@@ -5,10 +5,13 @@
 
 package edu.boun.edgecloudsim.edge_server;
 
+import edu.boun.edgecloudsim.edge_client.Queue;
 import edu.boun.edgecloudsim.task_generator.Task;
 import org.w3c.dom.Element;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class EdgeDataCenter {
@@ -20,11 +23,15 @@ public class EdgeDataCenter {
     private int storage;
     private double x_pos;
     private double y_pos;
+    private int quota;
 
     private List<Task> queue1;
     private List<Task> queue2;
     private List<Task> queue3;
-    private int[] pref;
+    private List<Task> receiveReqFromTasks = new ArrayList<Task>();
+
+    //比较器实例
+    TaskPreferenceComparator taskPreferenceComparator = new TaskPreferenceComparator();
 
     public EdgeDataCenter(int _id, int _CPU, int _RAM, int _storage, double x, double y){
         this.id = _id;
@@ -35,10 +42,6 @@ public class EdgeDataCenter {
         this.y_pos = y;
     }
 
-    //接收移动设备提交的Task，放入queue并排序
-    public void preProcessTask(List<Task> receiveTask){
-
-    }
 
     //根据系统剩余资源产生可行虚拟机矩阵
     public int[][] createMatrix(){
@@ -63,16 +66,34 @@ public class EdgeDataCenter {
     }
 
     public void processTask(List<Task> receiveTask){
-        preProcessTask(receiveTask);
         int[][] feasableMatrix = createMatrix();
         int[] selectedVM = selectVM(feasableMatrix);
         createVMs(selectedVM);
 
     }
 
-    //更新偏好序列
-    public void updatePreference(){
+    public void updateServerQuota(){
 
+    }
+
+    //更新偏好序列
+    public boolean updatePreference(){
+        Collections.sort(receiveReqFromTasks, taskPreferenceComparator);
+        //超过限额部分的任务要拒绝
+        if( receiveReqFromTasks.size() > quota){
+            receiveReqFromTasks = receiveReqFromTasks.subList(0, quota);
+            return true;
+        }
+        return false;
+    }
+
+    public class TaskPreferenceComparator implements Comparator<Task>
+    {
+        public int compare(Task t1, Task t2)
+        {
+
+            return (t1.length - t2.length);
+        }
     }
 
     //关闭所有的Host和VM
@@ -86,6 +107,7 @@ public class EdgeDataCenter {
     public double getY() {    return y_pos;    }
     public void setY(double y_pos) {    this.y_pos = y_pos;    }
     public int getId(){ return id;}
+    public List<Task> getReceiveReqFromTasks() {    return receiveReqFromTasks;   }
 
     @Override
     public String toString() {

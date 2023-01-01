@@ -1,6 +1,9 @@
 package edu.boun.edgecloudsim.edge_client;
 
 import edu.boun.edgecloudsim.core.ScenarioFactory;
+import edu.boun.edgecloudsim.edge_orchestrator.DefaultEdgeOrchestrator;
+import edu.boun.edgecloudsim.edge_orchestrator.EdgeOrchestrator;
+import edu.boun.edgecloudsim.edge_server.EdgeDataCenter;
 import edu.boun.edgecloudsim.network.Channel;
 import edu.boun.edgecloudsim.network.NetworkModel;
 import edu.boun.edgecloudsim.task_generator.TaskGeneratorModel;
@@ -72,8 +75,9 @@ public class MobileDevice {
     }
 
     //更新quota
-    public void updateQuota(NetworkModel networkModel){
+    public void updateQuota(NetworkModel networkModel, DefaultEdgeOrchestrator edgeOrchestrator){
         //1.先清除所有队列的quota
+        queue.clear();
         queue.add(queue1);
         queue.add(queue2);
         queue.add(queue3);
@@ -81,6 +85,7 @@ public class MobileDevice {
             que.setQuota(0);
         }
         clearBlankQueue();
+        edgeOrchestrator.clearPrematchTasks();//清除编排器待匹配队列
         //2.找出对于当前设备而言的合格信道
         List<Channel> channels = networkModel.serachChannelByDevice(mobileID);
         Iterator<Channel> iteratorChannel = channels.iterator();
@@ -92,6 +97,11 @@ public class MobileDevice {
         //没有合格信道结束
         if(channels.size() == 0) return;
 
+        List<EdgeDataCenter> acceptableServers = new ArrayList<EdgeDataCenter>();
+        for( Channel chan : channels){
+            acceptableServers.add( chan.getEdgeServer() );
+        }
+
         //3.否则开始Q值迭代
         int quotaSum = channels.size();
         if( quotaSum < queue.size() ){//3.1：quota不够所有队列分配一个 对队长排序后分配
@@ -102,10 +112,8 @@ public class MobileDevice {
                 index++;
                 quotaSum--;
             }
-            return;
         }else if( quotaSum==queue.size() ){//3.2: 每个队列quota一个
             for(Queue que : queue){      que.setQuota(1);     }
-            return;
         }else{
             quotaSum -= queue.size();
             for(Queue que : queue){      que.setQuota(1);     }
@@ -115,9 +123,27 @@ public class MobileDevice {
                 queue.get(0).setQuota( tmp+1 );
                 quotaSum--;
             }
-            return;
         }
-
+        //把信道合格的服务器列表加入quota对应任务的偏好列表中 并排序
+        for(Queue que : queue){
+            //防止出现null pointer错误
+            que.setQuota( Math.min( que.getQuota(), que.getTaskQueues().size() ) );
+        }
+        for(Queue que:queue){
+            int tmp = que.getQuota();
+            int i = 0;
+            Task tmpTask = null;
+            while( tmp != 0){
+                tmpTask = que.getTaskQueues().get(i);
+                tmpTask.setPreferenceList(acceptableServers);
+                tmpTask.sortPreferenceList(); //产生偏好序列 待补充
+                //提交到Edge Orcheastator上
+                edgeOrchestrator.getPreMatchTasks().add(tmpTask);
+                tmp--;
+                i++;
+            }
+        }
+        return;
     }
 
     //queue清除空白队列

@@ -34,10 +34,7 @@ public class SampleScenarioFactory implements ScenarioFactory {
 
 
 
-    @Override
-    public EdgeOrchestrator getEdgeOrchestrator() {
-        return new DefaultEdgeOrchestrator(orchestratorPolicy, simScenario);
-    }
+
 
 //    @Override
 //    public MobilityModel getMobilityModel() {
@@ -52,6 +49,11 @@ public class SampleScenarioFactory implements ScenarioFactory {
     @Override
     public EdgeServerManager getEdgeServerManager() {
         return new EdgeServerManager();
+    }
+
+    @Override
+    public DefaultEdgeOrchestrator getEdgeOrchestrator(EdgeServerManager edgeServerManager) {
+        return new DefaultEdgeOrchestrator(orchestratorPolicy, simScenario, edgeServerManager);
     }
 
     @Override

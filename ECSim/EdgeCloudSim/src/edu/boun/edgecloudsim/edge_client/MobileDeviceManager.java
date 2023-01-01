@@ -8,6 +8,8 @@ package edu.boun.edgecloudsim.edge_client;
 
 import edu.boun.edgecloudsim.core.ScenarioFactory;
 import edu.boun.edgecloudsim.core.SimSettings;
+import edu.boun.edgecloudsim.edge_orchestrator.DefaultEdgeOrchestrator;
+import edu.boun.edgecloudsim.edge_orchestrator.EdgeOrchestrator;
 import edu.boun.edgecloudsim.network.NetworkModel;
 import edu.boun.edgecloudsim.task_generator.DeviceTaskStatic;
 import edu.boun.edgecloudsim.task_generator.Task;
@@ -79,10 +81,10 @@ public class MobileDeviceManager {
         }
     }
 
-    //更新队列quota
-    public void updateQuotas(NetworkModel networkModel){
+    //更新队列quota 并向Edge Orchestrator提交任务
+    public void updateQuotas(NetworkModel networkModel, DefaultEdgeOrchestrator edgeOrchestrator){
         for( MobileDevice mobileDevice : mobileDevicesList ){
-            mobileDevice.updateQuota(networkModel);
+            mobileDevice.updateQuota(networkModel, edgeOrchestrator);
         }
     }
 

@@ -4,6 +4,7 @@
 package edu.boun.edgecloudsim.core;
 
 import edu.boun.edgecloudsim.edge_client.MobileDeviceManager;
+import edu.boun.edgecloudsim.edge_orchestrator.DefaultEdgeOrchestrator;
 import edu.boun.edgecloudsim.edge_orchestrator.EdgeOrchestrator;
 import edu.boun.edgecloudsim.edge_server.EdgeServerManager;
 import edu.boun.edgecloudsim.network.NetworkModel;
@@ -11,7 +12,7 @@ import edu.boun.edgecloudsim.network.NetworkModel;
 public class SimManager {
     private String simScenario;
     private ScenarioFactory scenarioFactory;
-    private EdgeOrchestrator edgeOrchestrator;
+    private DefaultEdgeOrchestrator edgeOrchestrator;
     private EdgeServerManager edgeServerManager;
     private MobileDeviceManager mobileDeviceManager;
     private NetworkModel networkModel;
@@ -43,6 +44,11 @@ public class SimManager {
         networkModel.init(mobileDeviceManager.getMobileDevicesList(), edgeServerManager.getEdgeServersList());
         System.out.println( networkModel.getChannelsList() );
 
+        //产生编排器
+        System.out.println("\r\n" + "Init Edge Orchestrator" );
+        edgeOrchestrator = scenarioFactory.getEdgeOrchestrator(edgeServerManager);
+
+
     }
 
     public void updateQueues(int t, ScenarioFactory scenarioFactory){
@@ -56,7 +62,8 @@ public class SimManager {
     }
 
     public void generateQuota(){
-        mobileDeviceManager.updateQuotas(networkModel);
+        mobileDeviceManager.updateQuotas(networkModel, edgeOrchestrator);
+        System.out.println("待匹配任务集合"+edgeOrchestrator.getPreMatchTasks());
     }
 
     public void shutdownEntity(){

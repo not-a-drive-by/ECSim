@@ -7,7 +7,11 @@ package edu.boun.edgecloudsim.task_generator;
 
 //public class Task extends Cloudlet {
 
+import edu.boun.edgecloudsim.edge_server.EdgeDataCenter;
+
 import java.io.Serializable;
+import java.util.Collections;
+import java.util.List;
 
 public class Task implements Serializable {//序列化后才能从文件读出
    //自身属性
@@ -26,9 +30,9 @@ public class Task implements Serializable {//序列化后才能从文件读出
    public int finishTime=-1;//若为-1则未完成
 
    //偏好列表
-   public double[] preferenceList;
+   private List<EdgeDataCenter> preferenceList;
    //目标服务器ID
-   public int serverID;
+   private EdgeDataCenter targetServer = null;
 
    public Task(int length, int RAM, int CPU, int storage) {
       this.length = length;
@@ -57,6 +61,19 @@ public class Task implements Serializable {//序列化后才能从文件读出
       }
 
    }
+
+   public void sortPreferenceList(){
+      //Collections.sort(  );
+   }
+
+
+
+
+   //无聊函数
+   public List<EdgeDataCenter> getPreferenceList() {     return preferenceList;   }
+   public void setPreferenceList(List<EdgeDataCenter> preferenceList) {   this.preferenceList = preferenceList;   }
+   public EdgeDataCenter getTargetServer() {    return targetServer;   }
+   public void setTargetServer(EdgeDataCenter targetServer) {    this.targetServer = targetServer;   }
 
    @Override
    public String toString() {
