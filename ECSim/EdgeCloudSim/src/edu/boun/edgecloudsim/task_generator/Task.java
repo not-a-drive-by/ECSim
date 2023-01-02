@@ -10,7 +10,9 @@ package edu.boun.edgecloudsim.task_generator;
 import edu.boun.edgecloudsim.edge_server.EdgeDataCenter;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class Task implements Serializable {//序列化后才能从文件读出
@@ -30,9 +32,11 @@ public class Task implements Serializable {//序列化后才能从文件读出
    public int finishTime=-1;//若为-1则未完成
 
    //偏好列表
-   private List<EdgeDataCenter> preferenceList;
+   private List<EdgeDataCenter> preferenceList = new ArrayList<EdgeDataCenter>();
    //目标服务器ID
    private EdgeDataCenter targetServer = null;
+   //比较器
+   //private ServerPreferenceComparator serverPreferenceComparator = new ServerPreferenceComparator();
 
    public Task(int length, int RAM, int CPU, int storage) {
       this.length = length;
@@ -63,7 +67,15 @@ public class Task implements Serializable {//序列化后才能从文件读出
    }
 
    public void sortPreferenceList(){
-      //Collections.sort(  );
+      Collections.sort( preferenceList, new ServerPreferenceComparator() );
+   }
+
+   public class ServerPreferenceComparator implements Comparator<EdgeDataCenter>
+   {
+      public int compare(EdgeDataCenter s1, EdgeDataCenter s2)
+      {
+         return (s1.getId() - s2.getId());
+      }
    }
 
 
@@ -71,9 +83,17 @@ public class Task implements Serializable {//序列化后才能从文件读出
 
    //无聊函数
    public List<EdgeDataCenter> getPreferenceList() {     return preferenceList;   }
-   public void setPreferenceList(List<EdgeDataCenter> preferenceList) {   this.preferenceList = preferenceList;   }
+   public void setPreferenceList(List<EdgeDataCenter> preferenceList) {
+      //这里注意不能浅拷贝
+      this.preferenceList.clear();
+      for(EdgeDataCenter edgeDataCenter:preferenceList){
+         this.preferenceList.add(edgeDataCenter);
+      }
+   }
    public EdgeDataCenter getTargetServer() {    return targetServer;   }
    public void setTargetServer(EdgeDataCenter targetServer) {    this.targetServer = targetServer;   }
+   public double getDataSize() {    return dataSize;  }
+   public void setDataSize(double dataSize) {     this.dataSize = dataSize;   }
 
    @Override
    public String toString() {
@@ -85,6 +105,7 @@ public class Task implements Serializable {//序列化后才能从文件读出
               ", taskID=" + taskID +
               ", dataSize=" + dataSize +
               ", arrive at:" + arrivalTime +
+//              ", aim at:" + targetServer+
               '}' + "\r\n";
    }
 }

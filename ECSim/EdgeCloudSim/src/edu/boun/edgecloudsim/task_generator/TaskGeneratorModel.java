@@ -83,13 +83,13 @@ public class TaskGeneratorModel {
 
             List<Task> tList = new ArrayList<Task>();//每个设备的任务集合
             for(int k=0; k< (int) taskNum*deviceTaskStatic.type1Ratio; k++){
-                tList.add(new Task(deviceTaskStatic.meanLen1, 32, 2, 1690, taskID++, 10, k));
+                tList.add(new Task(deviceTaskStatic.meanLen1, 32, 2, 1690, taskID++, 0.1, k));
             }
             for(int k=0; k< (int) taskNum*deviceTaskStatic.type2Ratio; k++){
-                tList.add(new Task(deviceTaskStatic.meanLen2, 30, 2, 420, taskID++,20, k));
+                tList.add(new Task(deviceTaskStatic.meanLen2, 30, 2, 420, taskID++,0.2, k));
             }
             for(int k=0; k< (int) taskNum*deviceTaskStatic.type3Ratio; k++){
-                tList.add(new Task(deviceTaskStatic.meanLen2, 7, 2, 1690, taskID++,30, k));
+                tList.add(new Task(deviceTaskStatic.meanLen2, 7, 2, 1690, taskID++,0.3, k));
             }
 
             Collections.sort(tList, new TaskComparatorByTime());//将任务按达到时间排序

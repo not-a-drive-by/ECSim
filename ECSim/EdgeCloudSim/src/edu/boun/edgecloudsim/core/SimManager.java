@@ -7,6 +7,7 @@ import edu.boun.edgecloudsim.edge_client.MobileDeviceManager;
 import edu.boun.edgecloudsim.edge_orchestrator.DefaultEdgeOrchestrator;
 import edu.boun.edgecloudsim.edge_orchestrator.EdgeOrchestrator;
 import edu.boun.edgecloudsim.edge_server.EdgeServerManager;
+import edu.boun.edgecloudsim.network.Channel;
 import edu.boun.edgecloudsim.network.NetworkModel;
 
 public class SimManager {
@@ -54,16 +55,29 @@ public class SimManager {
     public void updateQueues(int t, ScenarioFactory scenarioFactory){
         //1.更新移动设备的待处理队列
         mobileDeviceManager.updateUnprocessedQueues(t);
-        System.out.println("在时刻"+ t + "更新后:" + "\r\n");
+        System.out.println("在时刻"+ t + "更新队列后:" + "\r\n");
         System.out.println(mobileDeviceManager.getMobileDevicesList());
 
-        //2.更新移动设备待传输队列
-        mobileDeviceManager.updateUntransQueues(networkModel);
+    }
+
+    public void updateChannel(){
+        //每个时隙信道重置为未使用过
+        for(Channel channel : networkModel.getChannelsList()){
+            channel.usedFlag = false;
+        }
     }
 
     public void generateQuota(){
+        edgeOrchestrator.clearPrematchTasks();//清除编排器待匹配队列
         mobileDeviceManager.updateQuotas(networkModel, edgeOrchestrator);
+        edgeServerManager.updateServerQuota();
         System.out.println("待匹配任务集合"+edgeOrchestrator.getPreMatchTasks());
+    }
+
+    public void transmitteTasks(){
+        //更新移动设备待传输队列
+        mobileDeviceManager.updateUntransQueues(networkModel);
+        System.out.println("更新传输队列后"+mobileDeviceManager.getMobileDevicesList());
     }
 
     public void shutdownEntity(){
@@ -74,4 +88,5 @@ public class SimManager {
     //无用函数
     public EdgeServerManager getEdgeServerManager() {   return edgeServerManager;    }
     public MobileDeviceManager getMobileDeviceManager() {   return mobileDeviceManager;   }
+    public DefaultEdgeOrchestrator getEdgeOrchestrator() {    return edgeOrchestrator;    }
 }

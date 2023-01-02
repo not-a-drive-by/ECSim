@@ -21,7 +21,7 @@ public class sample1 {
 
 
         //时隙大循环
-        for(int t=0; t<5; t++){
+        for(int t=0; t<1; t++){
             //1. 更新mobileDevice的待处理待发送队列 edgeServer的待处理队列
             simManager.updateQueues(t, scenarioFactory);
             //2. 更新mobileDevice的坐标
@@ -31,9 +31,9 @@ public class sample1 {
             //4. 确定移动设备参与匹配的名额
             simManager.generateQuota();
             //5. Edge Orchestrator负责完成设备与服务器之间的匹配
-
+            simManager.getEdgeOrchestrator().Matching();
             //6. 根据匹配结果开始传输数据包
-
+            simManager.transmitteTasks();
             //7. edgeServer开始进行资源调度
         }
 

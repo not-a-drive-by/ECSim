@@ -73,15 +73,21 @@ public class EdgeDataCenter {
     }
 
     public void updateServerQuota(){
-
+        quota = 1;
     }
 
     //更新偏好序列
     public boolean updatePreference(){
         Collections.sort(receiveReqFromTasks, taskPreferenceComparator);
+        List<Task> rejectedReqTask;
         //超过限额部分的任务要拒绝
+        //被拒绝的任务目标服务器应当清空 发起请求的时候已经从preferenceList中删掉了
         if( receiveReqFromTasks.size() > quota){
+            rejectedReqTask = receiveReqFromTasks.subList(quota, receiveReqFromTasks.size());
             receiveReqFromTasks = receiveReqFromTasks.subList(0, quota);
+            for(Task t : rejectedReqTask){
+                t.setTargetServer(null);
+            }
             return true;
         }
         return false;
@@ -91,8 +97,19 @@ public class EdgeDataCenter {
     {
         public int compare(Task t1, Task t2)
         {
+            return (t1.taskID - t2.taskID);
+        }
+    }
 
-            return (t1.length - t2.length);
+    //接受卸载的任务
+    public void receiveOffloadTasks(Task task){
+        int taskType = task.getType();
+        if( taskType == 1 ){
+            queue1.add(task);
+        }else if( taskType == 2 ){
+            queue2.add(task);
+        }else{
+            queue3.add(task);
         }
     }
 

@@ -4,8 +4,10 @@
     <list default="true" id="18a26140-92e0-43de-8a37-25fa308ba712" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TaskInformation.txt" beforeDir="false" afterPath="$PROJECT_DIR$/TaskInformation.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ECSim _ada/edu/boun/edgecloudsim/applications/sample_app1/sample1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ECSim _ada/edu/boun/edgecloudsim/applications/sample_app1/sample1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/ECSim _ada/edu/boun/edgecloudsim/edge_client/MobileDevice.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ECSim _ada/edu/boun/edgecloudsim/edge_client/MobileDevice.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/ECSim _ada/edu/boun/edgecloudsim/edge_client/MobileDeviceManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ECSim _ada/edu/boun/edgecloudsim/edge_client/MobileDeviceManager.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ECSim _ada/edu/boun/edgecloudsim/edge_server/EdgeDataCenter.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ECSim _ada/edu/boun/edgecloudsim/edge_server/EdgeDataCenter.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ECSim _ada/edu/boun/edgecloudsim/edge_server/EdgeServerManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ECSim _ada/edu/boun/edgecloudsim/edge_server/EdgeServerManager.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,7 +49,7 @@
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
   </component>
-  <component name="RunManager" selected="Application.sample1">
+  <component name="RunManager" selected="Application.TaskGeneratorModel">
     <configuration name="TaskGeneratorModel" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="edu.boun.edgecloudsim.task_generator.TaskGeneratorModel" />
       <module name="ECSim _ada" />
@@ -76,8 +78,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.sample1" />
         <item itemvalue="Application.TaskGeneratorModel" />
+        <item itemvalue="Application.sample1" />
       </list>
     </recent_temporary>
   </component>
@@ -100,7 +102,7 @@
       <workItem from="1671535397173" duration="9934000" />
       <workItem from="1671765411296" duration="18511000" />
       <workItem from="1672300234465" duration="28865000" />
-      <workItem from="1672460851299" duration="22158000" />
+      <workItem from="1672460851299" duration="45806000" />
     </task>
     <servers />
   </component>

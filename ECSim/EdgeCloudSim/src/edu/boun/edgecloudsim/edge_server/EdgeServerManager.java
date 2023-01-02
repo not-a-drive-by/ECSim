@@ -46,6 +46,12 @@ public class EdgeServerManager {
         }
     }
 
+    public void updateServerQuota(){
+        for(EdgeDataCenter edgeServer:edgeServersList){
+            edgeServer.updateServerQuota();
+        }
+    }
+
 
 
     //关闭localDatacenters中所有的Datacenter

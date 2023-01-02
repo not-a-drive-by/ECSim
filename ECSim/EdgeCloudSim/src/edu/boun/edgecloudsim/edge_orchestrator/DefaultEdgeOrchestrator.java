@@ -20,20 +20,26 @@ public class DefaultEdgeOrchestrator extends EdgeOrchestrator{
     }
 
     public void Matching(){
+        boolean fisrtTime = true;
         boolean sendRequestFlag = true;
         boolean rejectRequestFlag = false;
-        while( sendRequestFlag==true && rejectRequestFlag==false ){
+        //匹配前先清空所有服务器的偏好序列
+        for(EdgeDataCenter edgeDataCenter : EdgeServers){
+            edgeDataCenter.getReceiveReqFromTasks().clear();
+        }
+        while( fisrtTime || !(sendRequestFlag==false || rejectRequestFlag==false) ){
+            fisrtTime = false;
             sendRequestFlag = false;
-            //任务发起请求前先清空所有服务器的偏好序列
-            for(EdgeDataCenter edgeDataCenter : EdgeServers){
-                edgeDataCenter.getReceiveReqFromTasks().clear();
-            }
+            rejectRequestFlag = false;
             //任务发起请求
+//            System.out.println("匹配循环一次");
             for( Task task : preMatchTasks){
-                if( task.getPreferenceList().size() != 0 ){
-                    sendRequestFlag = sendRequestFlag ? sendRequestFlag : false;
+//                System.out.println(task.taskID + "偏好序列"+task.getPreferenceList());
+                if( task.getPreferenceList().size()!=0 && task.getTargetServer()==null ){
+                    sendRequestFlag = true;
                     EdgeDataCenter edgeServer = task.getPreferenceList().get(0);
                     edgeServer.getReceiveReqFromTasks().add(task);
+//                    System.out.println(task.taskID + "对"+edgeServer.getId()+"发起了请求");
                     task.setTargetServer(edgeServer);
                     task.getPreferenceList().remove(0);
                 }
@@ -42,6 +48,16 @@ public class DefaultEdgeOrchestrator extends EdgeOrchestrator{
             for(EdgeDataCenter edgeServer : EdgeServers){
                 rejectRequestFlag = rejectRequestFlag || edgeServer.updatePreference();
             }
+
+
+        }
+        //最后看看匹配结果
+        for(Task t : preMatchTasks){
+            System.out.println(t.taskID + "匹配到了" +t.getTargetServer());
+        }
+        for(EdgeDataCenter edgeServer : EdgeServers){
+            System.out.println(edgeServer.getId()+"接受了"+edgeServer.getReceiveReqFromTasks());
+
         }
     }
 
