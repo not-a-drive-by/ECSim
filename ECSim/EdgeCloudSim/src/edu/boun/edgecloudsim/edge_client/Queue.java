@@ -13,6 +13,9 @@ public class Queue {
     public List<Task> getTaskQueues() {    return taskQueues;   }
     public int getQuota() {  return quota;   }
     public void setQuota(int quota) {   this.quota = quota;    }
+    public int getQueueLength(){
+        return taskQueues.size();
+    }
 
     @Override
     public String toString() {

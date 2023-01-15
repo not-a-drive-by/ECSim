@@ -52,6 +52,13 @@ public class EdgeServerManager {
         }
     }
 
+    public void processTasks(int time){
+        for(EdgeDataCenter edgeDataCenter : edgeServersList){
+            edgeDataCenter.processTask(time);
+        }
+
+    }
+
 
 
     //关闭localDatacenters中所有的Datacenter

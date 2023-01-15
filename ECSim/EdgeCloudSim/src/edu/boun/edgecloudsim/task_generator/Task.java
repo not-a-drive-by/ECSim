@@ -86,14 +86,18 @@ public class Task implements Serializable {//序列化后才能从文件读出
    public void setPreferenceList(List<EdgeDataCenter> preferenceList) {
       //这里注意不能浅拷贝
       this.preferenceList.clear();
-      for(EdgeDataCenter edgeDataCenter:preferenceList){
-         this.preferenceList.add(edgeDataCenter);
-      }
+      this.preferenceList.addAll(preferenceList);
+//      for(EdgeDataCenter edgeDataCenter:preferenceList){
+//         this.preferenceList.add(edgeDataCenter);
+//      }
    }
    public EdgeDataCenter getTargetServer() {    return targetServer;   }
    public void setTargetServer(EdgeDataCenter targetServer) {    this.targetServer = targetServer;   }
    public double getDataSize() {    return dataSize;  }
    public void setDataSize(double dataSize) {     this.dataSize = dataSize;   }
+   public int getArrivalTime() {  return arrivalTime;  }
+   public int getLength() {   return length;  }
+   public void setFinishTime(int finishTime) {   this.finishTime = finishTime;   }
 
    @Override
    public String toString() {

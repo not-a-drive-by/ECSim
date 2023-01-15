@@ -2,6 +2,7 @@ package edu.boun.edgecloudsim.network;
 
 import edu.boun.edgecloudsim.edge_client.MobileDevice;
 import edu.boun.edgecloudsim.edge_server.EdgeDataCenter;
+import edu.boun.edgecloudsim.utils.Variable;
 
 public class Channel {
     private MobileDevice mobileDevice;
@@ -14,7 +15,7 @@ public class Channel {
         this.mobileDevice = mobileDevice;
         this.edgeServer = edgeServer;
 
-        this.ratio = updateRatio();
+        updateRatio();
         this.usedFlag = false;
     }
 
@@ -25,15 +26,17 @@ public class Channel {
     }
 
     //更新信道传输速率
-    private double updateRatio(){
+    public void updateRatio(){
         double dis = getDistance();
-        double SINR = Math.pow(dis,-3)*mobileDevice.getPower()/(10+15);
-        return 30*Math.log(1+SINR)/Math.log(2);
+        double channelGain = Variable.rand(1)*Math.pow(dis,-2);
+        double SINR = channelGain*mobileDevice.getPower()/Math.pow(10,-9);
+        this.ratio = Math.log(1+SINR)/Math.log(2);
     }
 
     //一些没啥用的函数
     public MobileDevice getMobileDevice() {    return mobileDevice;    }
     public EdgeDataCenter getEdgeServer() {      return edgeServer;    }
+    public void setRatio(double newRatio) {  this.ratio = newRatio;  }
 
     @Override
     public String toString() {

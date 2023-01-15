@@ -5,9 +5,19 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TaskInformation.txt" beforeDir="false" afterPath="$PROJECT_DIR$/TaskInformation.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/ECSim _ada/edu/boun/edgecloudsim/applications/sample_app1/sample1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ECSim _ada/edu/boun/edgecloudsim/applications/sample_app1/sample1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ECSim _ada/edu/boun/edgecloudsim/core/SimManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ECSim _ada/edu/boun/edgecloudsim/core/SimManager.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ECSim _ada/edu/boun/edgecloudsim/edge_client/MobileDevice$QueueComparatorByLen.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ECSim _ada/edu/boun/edgecloudsim/edge_client/MobileDevice$QueueComparatorByLen.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ECSim _ada/edu/boun/edgecloudsim/edge_client/MobileDevice$QueueComparatorByQValue.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ECSim _ada/edu/boun/edgecloudsim/edge_client/MobileDevice$QueueComparatorByQValue.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ECSim _ada/edu/boun/edgecloudsim/edge_client/MobileDevice$TaskComparatorByLen.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/ECSim _ada/edu/boun/edgecloudsim/edge_client/MobileDevice.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ECSim _ada/edu/boun/edgecloudsim/edge_client/MobileDevice.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ECSim _ada/edu/boun/edgecloudsim/edge_client/Queue.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ECSim _ada/edu/boun/edgecloudsim/edge_client/Queue.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ECSim _ada/edu/boun/edgecloudsim/edge_server/EdgeDataCenter$TaskPreferenceComparator.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ECSim _ada/edu/boun/edgecloudsim/edge_server/EdgeDataCenter$TaskPreferenceComparator.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/ECSim _ada/edu/boun/edgecloudsim/edge_server/EdgeDataCenter.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ECSim _ada/edu/boun/edgecloudsim/edge_server/EdgeDataCenter.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/ECSim _ada/edu/boun/edgecloudsim/edge_server/EdgeServerManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ECSim _ada/edu/boun/edgecloudsim/edge_server/EdgeServerManager.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ECSim _ada/edu/boun/edgecloudsim/edge_server/EdgeVM.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ECSim _ada/edu/boun/edgecloudsim/edge_server/EdgeVM.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ECSim _ada/edu/boun/edgecloudsim/network/Channel.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ECSim _ada/edu/boun/edgecloudsim/network/Channel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ECSim _ada/edu/boun/edgecloudsim/task_generator/Task.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ECSim _ada/edu/boun/edgecloudsim/task_generator/Task.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ECSim _ada/edu/boun/edgecloudsim/task_generator/TaskGeneratorModel.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ECSim _ada/edu/boun/edgecloudsim/task_generator/TaskGeneratorModel.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,13 +59,26 @@
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
   </component>
-  <component name="RunManager" selected="Application.TaskGeneratorModel">
+  <component name="RunManager" selected="Application.sample1">
     <configuration name="TaskGeneratorModel" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="edu.boun.edgecloudsim.task_generator.TaskGeneratorModel" />
       <module name="ECSim _ada" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="edu.boun.edgecloudsim.task_generator.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Variable" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="edu.boun.edgecloudsim.utils.Variable" />
+      <module name="ECSim _ada" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="edu.boun.edgecloudsim.utils.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -78,8 +101,9 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.TaskGeneratorModel" />
         <item itemvalue="Application.sample1" />
+        <item itemvalue="Application.Variable" />
+        <item itemvalue="Application.TaskGeneratorModel" />
       </list>
     </recent_temporary>
   </component>
@@ -102,7 +126,10 @@
       <workItem from="1671535397173" duration="9934000" />
       <workItem from="1671765411296" duration="18511000" />
       <workItem from="1672300234465" duration="28865000" />
-      <workItem from="1672460851299" duration="45806000" />
+      <workItem from="1672460851299" duration="45950000" />
+      <workItem from="1672709111450" duration="2991000" />
+      <workItem from="1673315127974" duration="32832000" />
+      <workItem from="1673767877309" duration="11156000" />
     </task>
     <servers />
   </component>

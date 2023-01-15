@@ -21,6 +21,7 @@ public class MobileDevice {
     private double x_pos;
     private double y_pos;
     private int power;//发射功率
+    private int threshold = 10;
 
     //待处理任务队列 假设都是三种
     public Queue queue1 = new Queue();
@@ -38,6 +39,7 @@ public class MobileDevice {
     Comparator<Queue> queueComparatorByLen = new QueueComparatorByLen();
     Comparator<Queue> queueComparatorByLQValue = new QueueComparatorByQValue();
     Comparator<Task> taskComparatorByLen = new TaskComparatorBySize();
+
 
     public MobileDevice(double _x, double _y, int _mobileID, List<Task> tasks) {
         //初始化参数
@@ -89,7 +91,7 @@ public class MobileDevice {
         Iterator<Channel> iteratorChannel = channels.iterator();
         while(iteratorChannel.hasNext()){
             Channel chan = iteratorChannel.next();
-            if( chan.ratio < 3E-4) iteratorChannel.remove();
+            if( chan.ratio < threshold ) iteratorChannel.remove();
         }
 //        System.out.println("更新信道信息后"+channels.size());
         //没有合格信道结束
@@ -123,10 +125,7 @@ public class MobileDevice {
             }
         }
         //把信道合格的服务器列表加入quota对应任务的偏好列表中 并排序
-//        for(Queue que : queue){
-//            //防止出现null pointer错误
-//            que.setQuota( Math.min( que.getQuota(), que.getTaskQueues().size() ) );
-//        }
+
         for(Queue que:queue){
             int tmp = que.getQuota();
             int i = 0; //任务不会离队 所以下标记录
@@ -158,14 +157,15 @@ public class MobileDevice {
     //根据matching结果，将待传输任务加入集合并更新待发送队列
     public void updateTransQueue(NetworkModel networkModel){
         //根据匹配结果 更新待传输队列
+        List<Task> bufferTasks = new ArrayList<Task>();
         for(Queue que:queue){
-            int tmp = que.getQuota();
+            int tmp = Math.min(que.getQuota(), que.getTaskQueues().size());
             int i = 0;
             Task tmpTask = null;
             while( tmp != 0 && que.getTaskQueues().size()>0){
                 tmpTask = que.getTaskQueues().get(i);
                 if(tmpTask.getTargetServer() != null){
-                    transQueue.add(tmpTask);
+                    bufferTasks.add(tmpTask);
                     que.getTaskQueues().remove(tmpTask);
                 }else{
                     i++; //没有匹配到 保留在原本的队列里
@@ -173,19 +173,38 @@ public class MobileDevice {
                 tmp--;
             }
         }
-
+        //新到达的待卸载任务排序后依次放入，否则前面传到一半的不传了
+        Collections.sort(bufferTasks,taskComparatorByLen);
+        transQueue.addAll(bufferTasks);
         //根据信道传输速率 更新每个任务
-        Collections.sort(transQueue,taskComparatorByLen);
-        for(Task task: transQueue){
+        Iterator<Task> iteratorTask = transQueue.iterator();
+        while( iteratorTask.hasNext() ){
+            Task task = iteratorTask.next();
             int serverID = task.getTargetServer().getId();
             Channel cha = networkModel.serachChannelByDeviceandServer( mobileID, serverID);
             if( cha.usedFlag == false ){
-                task.setDataSize( task.getDataSize() - cha.ratio );//每个任务减去该时隙传输的内容大小
-                cha.usedFlag = true;
-                //如果传输完了 就调用对应服务器的接收函数
-                if( task.getDataSize() <= 0 ) task.getTargetServer().receiveOffloadTasks(task);
+                //可以传输不止一个任务、万一同一个设备有多个任务匹配到同一个服务器
+                if( cha.ratio > task.getDataSize() ){
+                    //能传输完当前任务 信道flag依旧设置为false
+                    cha.setRatio( cha.ratio - task.getDataSize() );
+                    task.setDataSize( task.getDataSize() - cha.ratio );//每个任务减去该时隙传输的内容大小
+                    task.getTargetServer().receiveOffloadTasks(task);
+                    iteratorTask.remove();
+                }else{
+                    //不足以传输完当前任务
+                    cha.usedFlag = true;
+                    task.setDataSize( task.getDataSize() - cha.ratio );//每个任务减去该时隙传输的内容大小
+                }
+
+
+//                //如果传输完了 就调用对应服务器的接收函数
+//                if( task.getDataSize() <= 0 ) {
+//                    task.getTargetServer().receiveOffloadTasks(task);
+//                    iteratorTask.remove();
+//                }
             }
         }
+
     }
 
 
@@ -203,7 +222,6 @@ public class MobileDevice {
         {
             double Q1 =  q1.getTaskQueues().size()/(q1.getQuota()*(q1.getQuota()+1));
             double Q2 =  q2.getTaskQueues().size()/(q2.getQuota()*(q2.getQuota()+1));
-            int res;
             if( Q1 > Q2 ){
                 return (int) Math.ceil(Q1-Q2);
             }else if(Q1 < Q2){

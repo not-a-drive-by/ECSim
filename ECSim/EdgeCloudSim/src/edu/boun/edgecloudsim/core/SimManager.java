@@ -63,6 +63,7 @@ public class SimManager {
     public void updateChannel(){
         //每个时隙信道重置为未使用过
         for(Channel channel : networkModel.getChannelsList()){
+            channel.updateRatio();
             channel.usedFlag = false;
         }
     }
@@ -78,6 +79,11 @@ public class SimManager {
         //更新移动设备待传输队列
         mobileDeviceManager.updateUntransQueues(networkModel);
         System.out.println("更新传输队列后"+mobileDeviceManager.getMobileDevicesList());
+    }
+
+    public void processTask(int time){
+        edgeServerManager.processTasks(time);
+        System.out.println("节点内资源调度后"+edgeServerManager.getEdgeServersList());
     }
 
     public void shutdownEntity(){
