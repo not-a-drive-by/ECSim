@@ -8,10 +8,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DefaultEdgeOrchestrator extends EdgeOrchestrator{
-    private List<Task> preMatchTasks = new ArrayList<Task>();
-    private List<EdgeDataCenter> EdgeServers;
+//    private List<Task> preMatchTasks = new ArrayList<Task>();
+//    private List<EdgeDataCenter> EdgeServers;
 
-    public DefaultEdgeOrchestrator(String orchestratorPolicy, String simScenario, EdgeServerManager edgeServerManager){
+    public DefaultEdgeOrchestrator( EdgeServerManager edgeServerManager){
         this.EdgeServers = edgeServerManager.getEdgeServersList();
     }
 
@@ -19,6 +19,7 @@ public class DefaultEdgeOrchestrator extends EdgeOrchestrator{
         preMatchTasks.clear();
     }
 
+    @Override
     public void Matching(){
         boolean fisrtTime = true;
         boolean sendRequestFlag = true;

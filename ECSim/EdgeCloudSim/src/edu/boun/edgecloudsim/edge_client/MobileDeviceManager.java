@@ -67,6 +67,13 @@ public class MobileDeviceManager {
                 mobileDeviceStatic.deviceID, tasks);
     }
 
+    //网络模型初始化后 给用户的所有任务绑定网络模型
+    public void bindTaskNetworkModel(NetworkModel networkModel){
+        for(MobileDevice mobileDevice : mobileDevicesList ){
+            mobileDevice.bindNetworkModel(networkModel);
+        }
+    }
+
     //更新待处理任务
     public void updateUnprocessedQueues(int t){
         for( MobileDevice mobileDevice : mobileDevicesList ){
@@ -82,7 +89,7 @@ public class MobileDeviceManager {
     }
 
     //更新队列quota 并向Edge Orchestrator提交任务
-    public void updateQuotas(NetworkModel networkModel, DefaultEdgeOrchestrator edgeOrchestrator){
+    public void updateQuotas(NetworkModel networkModel, EdgeOrchestrator edgeOrchestrator){
         for( MobileDevice mobileDevice : mobileDevicesList ){
             mobileDevice.updateQuota(networkModel, edgeOrchestrator);
         }

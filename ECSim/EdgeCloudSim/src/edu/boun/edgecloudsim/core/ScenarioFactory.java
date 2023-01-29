@@ -2,6 +2,7 @@ package edu.boun.edgecloudsim.core;
 
 import edu.boun.edgecloudsim.edge_client.MobileDeviceManager;
 import edu.boun.edgecloudsim.edge_orchestrator.DefaultEdgeOrchestrator;
+import edu.boun.edgecloudsim.edge_orchestrator.EdgeOrchestrator;
 import edu.boun.edgecloudsim.edge_server.EdgeServerManager;
 import edu.boun.edgecloudsim.network.NetworkModel;
 
@@ -11,7 +12,8 @@ public interface ScenarioFactory {
      * provides abstract Edge Orchestrator
      * @param edgeServerManager
      */
-    public DefaultEdgeOrchestrator getEdgeOrchestrator(EdgeServerManager edgeServerManager);
+    public EdgeOrchestrator getEdgeOrchestrator(EdgeServerManager edgeServerManager);
+//    public <T>T getEdgeOrchestrator(EdgeServerManager edgeServerManager);
 
     /**
      * provides abstract Mobility Model

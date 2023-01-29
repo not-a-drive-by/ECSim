@@ -6,6 +6,7 @@
 package edu.boun.edgecloudsim.edge_server;
 
 import edu.boun.edgecloudsim.edge_client.Queue;
+import edu.boun.edgecloudsim.statistic.Data;
 import edu.boun.edgecloudsim.task_generator.Task;
 import edu.boun.edgecloudsim.utils.StaticfinalTags;
 import org.w3c.dom.Element;
@@ -33,6 +34,7 @@ public class EdgeDataCenter {
 
     //比较器实例
     TaskPreferenceComparator taskPreferenceComparator = new TaskPreferenceComparator();
+    TaskLengthComparator taskLengthComparator = new TaskLengthComparator();
 
     public EdgeDataCenter(int _id, int _CPU, int _RAM, int _storage, double x, double y){
         this.id = _id;
@@ -70,13 +72,7 @@ public class EdgeDataCenter {
         return false;
     }
 
-    public class TaskPreferenceComparator implements Comparator<Task>
-    {
-        public int compare(Task t1, Task t2)
-        {
-            return (t1.taskID - t2.taskID);
-        }
-    }
+
 
     //接受卸载的任务
     public void receiveOffloadTasks(Task task){
@@ -168,7 +164,7 @@ public class EdgeDataCenter {
     }
 
     //根据李亚算法在矩阵中选择行向量
-    public int[] selectPolicy(ArrayList<int[]> matrix, int time){
+    public int[] selectPolicy(ArrayList<int[]> matrix, double time){
 
         int policy[];
         int queuelength[]=new int[3];
@@ -245,7 +241,7 @@ public class EdgeDataCenter {
     }
 
     //根据选择虚拟机组合创建虚拟机
-    public void createVMs(int[] policy, int time){
+    public void createVMs(int[] policy, double time){
         for(int i=0; i<3; i++){
             if( queue.get(i).size() == 0) break;
             int taskNum = policy[i];
@@ -261,12 +257,13 @@ public class EdgeDataCenter {
     }
 
     //关闭所有任务已经处理完的VM
-    public void terminateVMS(int time){
+    public void terminateVMS(double time){
         Iterator<EdgeVM> iteratorVM = activeVM.iterator();
         while(iteratorVM.hasNext()){
             EdgeVM VM = iteratorVM.next();
-            if( VM.getOffTime() == time ) {
+            if( VM.getOffTime() <= time ) { //等于还是小于等于取决于循环细粒度
                 //把处理完的任务加入数据统计集合
+                Data.addFinishedTasks(VM.getProcessingTask());
                 //离队
                 iteratorVM.remove();
             }
@@ -275,7 +272,11 @@ public class EdgeDataCenter {
     }
 
     //资源调度总函数
-    public void processTask(int time){
+    public void processTask(double time){
+        //所有任务按照长度排序
+        for( List<Task> que : queue ){
+            Collections.sort(que, taskLengthComparator);
+        }
         ArrayList<int[]> feasableMatrix = createMatrix();
         int[] selectedPolicy = selectPolicy( feasableMatrix, time);
         createVMs(selectedPolicy, time);
@@ -286,6 +287,27 @@ public class EdgeDataCenter {
     public void shutdownEntity(){
 
     }
+
+    //比较器构造方法
+    public class TaskPreferenceComparator implements Comparator<Task>
+    {
+        public int compare(Task t1, Task t2)
+        {
+            return (t1.taskID - t2.taskID);
+        }
+    }
+    public class TaskLengthComparator implements Comparator<Task>{
+        public int compare(Task t1, Task t2)
+        {
+            double tmp = t1.length - t2.length;
+            if( tmp <= 0 ){
+                return 0;
+            }else{
+                return 1;
+            }
+        }
+    }
+
 
     //一些没什么用的方法
     public double getX() {   return x_pos;    }

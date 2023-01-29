@@ -49,6 +49,17 @@ public class MobileDevice {
         this.preQueue = tasks;
         this.power = 20;
 
+        for( Task task : tasks ){
+            task.setDevice(this);
+        }
+
+    }
+
+    //绑定网络模型
+    public void bindNetworkModel(NetworkModel networkModel){
+        for(Task task : preQueue){
+            task.setNetworkModel(networkModel);
+        }
     }
 
     //更新待处理队列
@@ -73,7 +84,7 @@ public class MobileDevice {
 
 
     //更新quota
-    public void updateQuota(NetworkModel networkModel, DefaultEdgeOrchestrator edgeOrchestrator){
+    public void updateQuota(NetworkModel networkModel, EdgeOrchestrator edgeOrchestrator){
         //1.先清除所有队列的quota
         queue.clear();
         queue.add(queue1);

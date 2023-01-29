@@ -2,7 +2,7 @@
 <mobile_devices>
 	<user>
 		<userID>1001</userID>
-		<taskNum>10</taskNum>
+		<taskNum>100</taskNum>
 		<type1Ratio>0.3</type1Ratio>
 		<type2Ratio>0.3</type2Ratio>
 		<type3Ratio>0.4</type3Ratio>
@@ -22,7 +22,7 @@
 	</user>
 	<user>
 		<userID>1002</userID>
-		<taskNum>10</taskNum>
+		<taskNum>100</taskNum>
 		<type1Ratio>0.3</type1Ratio>
 		<type2Ratio>0.3</type2Ratio>
 		<type3Ratio>0.4</type3Ratio>
@@ -42,7 +42,7 @@
 	</user>
 	<user>
 		<userID>1003</userID>
-		<taskNum>10</taskNum>
+		<taskNum>100</taskNum>
 		<type1Ratio>0.3</type1Ratio>
 		<type2Ratio>0.3</type2Ratio>
 		<type3Ratio>0.4</type3Ratio>

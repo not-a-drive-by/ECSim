@@ -52,7 +52,7 @@ public class EdgeServerManager {
         }
     }
 
-    public void processTasks(int time){
+    public void processTasks(double time){
         for(EdgeDataCenter edgeDataCenter : edgeServersList){
             edgeDataCenter.processTask(time);
         }

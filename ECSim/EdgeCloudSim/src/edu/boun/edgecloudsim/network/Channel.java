@@ -9,6 +9,7 @@ public class Channel {
     private EdgeDataCenter edgeServer;
 
     public double ratio;
+    public double distance;
     public boolean usedFlag;
 
     public Channel( MobileDevice mobileDevice, EdgeDataCenter edgeServer){
@@ -27,8 +28,8 @@ public class Channel {
 
     //更新信道传输速率
     public void updateRatio(){
-        double dis = getDistance();
-        double channelGain = Variable.rand(1)*Math.pow(dis,-2);
+        distance = getDistance();
+        double channelGain = Variable.expRnd(1)*Math.pow(distance,-2);
         double SINR = channelGain*mobileDevice.getPower()/Math.pow(10,-9);
         this.ratio = Math.log(1+SINR)/Math.log(2);
     }

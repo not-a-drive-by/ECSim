@@ -2,22 +2,24 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="18a26140-92e0-43de-8a37-25fa308ba712" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/ECSim _ada.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/ECSim _ada.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TaskInformation.txt" beforeDir="false" afterPath="$PROJECT_DIR$/TaskInformation.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/ECSim _ada/edu/boun/edgecloudsim/applications/sample_app1/sample1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ECSim _ada/edu/boun/edgecloudsim/applications/sample_app1/sample1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/ECSim _ada/edu/boun/edgecloudsim/core/SimManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ECSim _ada/edu/boun/edgecloudsim/core/SimManager.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/ECSim _ada/edu/boun/edgecloudsim/edge_client/MobileDevice$QueueComparatorByLen.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ECSim _ada/edu/boun/edgecloudsim/edge_client/MobileDevice$QueueComparatorByLen.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/ECSim _ada/edu/boun/edgecloudsim/edge_client/MobileDevice$QueueComparatorByQValue.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ECSim _ada/edu/boun/edgecloudsim/edge_client/MobileDevice$QueueComparatorByQValue.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/ECSim _ada/edu/boun/edgecloudsim/edge_client/MobileDevice$TaskComparatorByLen.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ECSim _ada/edu/boun/edgecloudsim/edge_client/MobileDevice$TaskComparatorBySize.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ECSim _ada/edu/boun/edgecloudsim/edge_client/MobileDevice$TaskComparatorBySize.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/ECSim _ada/edu/boun/edgecloudsim/edge_client/MobileDevice.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ECSim _ada/edu/boun/edgecloudsim/edge_client/MobileDevice.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/ECSim _ada/edu/boun/edgecloudsim/edge_client/Queue.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ECSim _ada/edu/boun/edgecloudsim/edge_client/Queue.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/ECSim _ada/edu/boun/edgecloudsim/edge_server/EdgeDataCenter$TaskPreferenceComparator.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ECSim _ada/edu/boun/edgecloudsim/edge_server/EdgeDataCenter$TaskPreferenceComparator.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/ECSim _ada/edu/boun/edgecloudsim/edge_server/EdgeDataCenter.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ECSim _ada/edu/boun/edgecloudsim/edge_server/EdgeDataCenter.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/ECSim _ada/edu/boun/edgecloudsim/edge_server/EdgeServerManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ECSim _ada/edu/boun/edgecloudsim/edge_server/EdgeServerManager.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/ECSim _ada/edu/boun/edgecloudsim/edge_server/EdgeVM.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ECSim _ada/edu/boun/edgecloudsim/edge_server/EdgeVM.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/ECSim _ada/edu/boun/edgecloudsim/network/Channel.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ECSim _ada/edu/boun/edgecloudsim/network/Channel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ECSim _ada/edu/boun/edgecloudsim/task_generator/Task$ServerPreferenceComparator.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ECSim _ada/edu/boun/edgecloudsim/task_generator/Task$ServerPreferenceComparator.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/ECSim _ada/edu/boun/edgecloudsim/task_generator/Task.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ECSim _ada/edu/boun/edgecloudsim/task_generator/Task.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ECSim _ada/edu/boun/edgecloudsim/task_generator/TaskGeneratorModel$TaskComparatorByTime.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ECSim _ada/edu/boun/edgecloudsim/task_generator/TaskGeneratorModel$TaskComparatorByTime.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/ECSim _ada/edu/boun/edgecloudsim/task_generator/TaskGeneratorModel.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ECSim _ada/edu/boun/edgecloudsim/task_generator/TaskGeneratorModel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ECSim _ada/edu/boun/edgecloudsim/utils/Variable.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ECSim _ada/edu/boun/edgecloudsim/utils/Variable.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,6 +29,7 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="JavaFXApplication" />
         <option value="Class" />
       </list>
     </option>
@@ -58,6 +61,11 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Lyap\ECSim_ada\ECSim\EdgeCloudSim\src\edu\boun\edgecloudsim\static" />
+    </key>
   </component>
   <component name="RunManager" selected="Application.sample1">
     <configuration name="TaskGeneratorModel" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
@@ -102,8 +110,8 @@
     <recent_temporary>
       <list>
         <item itemvalue="Application.sample1" />
-        <item itemvalue="Application.Variable" />
         <item itemvalue="Application.TaskGeneratorModel" />
+        <item itemvalue="Application.Variable" />
       </list>
     </recent_temporary>
   </component>
@@ -130,6 +138,8 @@
       <workItem from="1672709111450" duration="2991000" />
       <workItem from="1673315127974" duration="32832000" />
       <workItem from="1673767877309" duration="11156000" />
+      <workItem from="1673942218684" duration="28514000" />
+      <workItem from="1674783927417" duration="31851000" />
     </task>
     <servers />
   </component>

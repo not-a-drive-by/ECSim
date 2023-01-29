@@ -12,10 +12,10 @@ public class EdgeVM {
     private int RAM;
     private int storage;
 
-    private int onTime;//开始工作的时间
-    private int offTime;//关闭时间
+    private double onTime;//开始工作的时间
+    private double offTime;//关闭时间
 
-    public EdgeVM(Task task, int time){
+    public EdgeVM(Task task, double time){
         this.processingTask = task;
         this.CPU = task.CPU;
         this.RAM = task.RAM;
@@ -31,9 +31,11 @@ public class EdgeVM {
 
     public int getStorage() {   return storage;    }
 
-    public int getOnTime() {   return onTime;    }
+    public double getOnTime() {   return onTime;    }
 
-    public int getOffTime() {    return offTime;    }
+    public double getOffTime() {    return offTime;    }
+
+    public Task getProcessingTask(){  return processingTask;  }
 
     @Override
     public String toString() {

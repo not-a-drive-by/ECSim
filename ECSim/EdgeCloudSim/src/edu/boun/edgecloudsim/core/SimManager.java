@@ -13,7 +13,7 @@ import edu.boun.edgecloudsim.network.NetworkModel;
 public class SimManager {
     private String simScenario;
     private ScenarioFactory scenarioFactory;
-    private DefaultEdgeOrchestrator edgeOrchestrator;
+    private EdgeOrchestrator edgeOrchestrator;
     private EdgeServerManager edgeServerManager;
     private MobileDeviceManager mobileDeviceManager;
     private NetworkModel networkModel;
@@ -43,10 +43,11 @@ public class SimManager {
         System.out.println("\r\n" + "Init Network Model" );
         networkModel = scenarioFactory.getNetworkModel();
         networkModel.init(mobileDeviceManager.getMobileDevicesList(), edgeServerManager.getEdgeServersList());
+        mobileDeviceManager.bindTaskNetworkModel(networkModel);
         System.out.println( networkModel.getChannelsList() );
 
         //产生编排器
-        System.out.println("\r\n" + "Init Edge Orchestrator" );
+        System.out.println("\r\n" + "Init Matching Edge Orchestrator" );
         edgeOrchestrator = scenarioFactory.getEdgeOrchestrator(edgeServerManager);
 
 
@@ -70,7 +71,7 @@ public class SimManager {
 
     public void generateQuota(){
         edgeOrchestrator.clearPrematchTasks();//清除编排器待匹配队列
-        mobileDeviceManager.updateQuotas(networkModel, edgeOrchestrator);
+        mobileDeviceManager.updateQuotas(networkModel, edgeOrchestrator);//产生quota并将对应任务添加到编排器
         edgeServerManager.updateServerQuota();
         System.out.println("待匹配任务集合"+edgeOrchestrator.getPreMatchTasks());
     }
@@ -81,7 +82,7 @@ public class SimManager {
         System.out.println("更新传输队列后"+mobileDeviceManager.getMobileDevicesList());
     }
 
-    public void processTask(int time){
+    public void processTask(double time){
         edgeServerManager.processTasks(time);
         System.out.println("节点内资源调度后"+edgeServerManager.getEdgeServersList());
     }
@@ -94,5 +95,5 @@ public class SimManager {
     //无用函数
     public EdgeServerManager getEdgeServerManager() {   return edgeServerManager;    }
     public MobileDeviceManager getMobileDeviceManager() {   return mobileDeviceManager;   }
-    public DefaultEdgeOrchestrator getEdgeOrchestrator() {    return edgeOrchestrator;    }
+    public EdgeOrchestrator getEdgeOrchestrator() {    return edgeOrchestrator;    }
 }
