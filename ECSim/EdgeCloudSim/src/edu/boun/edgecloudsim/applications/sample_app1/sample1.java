@@ -5,6 +5,7 @@ import edu.boun.edgecloudsim.core.SimManager;
 import edu.boun.edgecloudsim.core.SimSettings;
 import edu.boun.edgecloudsim.edge_client.MobileDeviceManager;
 import edu.boun.edgecloudsim.statistic.Data;
+import edu.boun.edgecloudsim.utils.StaticfinalTags;
 
 public class sample1 {
     public static void main(String[] args) throws Exception {
@@ -15,7 +16,7 @@ public class sample1 {
         SS.init("ECSim/EdgeCloudSim/scripts/sample_app1/config/mobile_devices.xml",
                 "ECSim/EdgeCloudSim/scripts/sample_app1/config/edge_servers.xml");
 
-        String orchestratorPolicy = "Matching";
+        String orchestratorPolicy = "Random";
 
         //创建实体类集合类
         ScenarioFactory scenarioFactory = new SampleScenarioFactory(orchestratorPolicy);
@@ -25,6 +26,7 @@ public class sample1 {
 
         //时隙大循环
         for(int t=0; t<500; t++){
+            StaticfinalTags.curTime++;
             //1. 更新mobileDevice的待处理待发送队列 edgeServer的待处理队列
             simManager.updateQueues(t, scenarioFactory);
             //2. 更新mobileDevice的坐标

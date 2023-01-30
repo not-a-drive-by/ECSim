@@ -26,6 +26,7 @@ public class Task implements Serializable {//序列化后才能从文件读出
    public int storage;
    public double dataSize;
 
+
    //由初始化设置
    public int taskID;
    public MobileDevice device;
@@ -59,16 +60,6 @@ public class Task implements Serializable {//序列化后才能从文件读出
       this.dataSize = dataSize;
    }
 
-   public Task(int length, int RAM, int CPU, int storage, int taskID, double dataSize, int arrivalTime) {
-      this.length = length;
-      this.RAM = RAM;
-      this.CPU = CPU;
-      this.storage = storage;
-      this.taskID = taskID;
-      this.dataSize = dataSize;
-      this.arrivalTime = arrivalTime;
-   }
-
    public int getType(){
       if( RAM==32 && CPU==2 && storage==1690 ){
          return 1;
@@ -87,17 +78,35 @@ public class Task implements Serializable {//序列化后才能从文件读出
    //对服务器按偏好排序
    public class ServerPreferenceComparator implements Comparator<EdgeDataCenter>
    {
-      public int compare(EdgeDataCenter s1, EdgeDataCenter s2)
-      {
-         return (s1.getId() - s2.getId());
-      }
 //      public int compare(EdgeDataCenter s1, EdgeDataCenter s2)
 //      {
-//         Channel cha1 = networkModel.serachChannelByDeviceandServer(device.getMobileID(), s1.getId());
-//         Channel cha2 = networkModel.serachChannelByDeviceandServer(device.getMobileID(), s2.getId());
-//        double dis1 = Math.sqrt( Math.pow(s1.getX()-device.getX(),2) + Math.pow(s1.getY()-device.getY(),2) );
-//        double dis2 = Math.sqrt( Math.pow(s2.getX()-device.getX(),2) + Math.pow(s2.getY()-device.getY(),2) );
+//         return (s1.getId() - s2.getId());
 //      }
+      public int compare(EdgeDataCenter s1, EdgeDataCenter s2)
+      {
+         Channel cha1 = networkModel.serachChannelByDeviceandServer(device.getMobileID(), s1.getId());
+         Channel cha2 = networkModel.serachChannelByDeviceandServer(device.getMobileID(), s2.getId());
+         int[] remainresource1 = s1.returnRemainResource();
+         int resource1 = 0;
+         for(int i=0; i<3; i++){
+            resource1 += remainresource1[i];
+         }
+         int[] remainresource2 = s2.returnRemainResource();
+         int resource2 = 0;
+         for(int i=0; i<3; i++){
+            resource2 += remainresource2[i];
+         }
+         int len1 = s1.getQueue().get(getType()-1).size()==0 ? 1 : s1.getQueue().get(getType()-1).size();
+         int len2 = s2.getQueue().get(getType()-1).size()==0 ? 1 :s2.getQueue().get(getType()-1).size();
+         double score1 = cha1.ratio*resource1/len1;
+         double score2 = cha2.ratio*resource2/len2;
+
+         if(score1 >= score2 ) {
+            return -1;
+         }else{
+            return 0;
+         }
+      }
    }
 
 

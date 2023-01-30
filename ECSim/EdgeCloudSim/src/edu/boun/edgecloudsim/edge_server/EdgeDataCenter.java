@@ -293,7 +293,24 @@ public class EdgeDataCenter {
     {
         public int compare(Task t1, Task t2)
         {
-            return (t1.taskID - t2.taskID);
+//            return (t1.taskID - t2.taskID);
+            double qmw1 = (queue.get(t1.getType()-1).size()-1) * Math.min(queue.get(t1.getType()-1).size(),1);
+            double qmw2 = (queue.get(t2.getType()-1).size()-1) * Math.min(queue.get(t2.getType()-1).size(),1);
+
+//            pen[0] += ( time - queue1.get(m).getArrivalTime() + queue1.get(m).getLength() )/ (3*tmpnum[0]);
+
+            double pen1 = StaticfinalTags.curTime - t1.arrivalTime + t1.length;
+            double pen2 = StaticfinalTags.curTime - t2.arrivalTime + t2.length;
+
+            double score1 = qmw1 + StaticfinalTags.alpha*pen1;
+            double score2 = qmw2 + StaticfinalTags.alpha*pen2;
+
+            if( score1 <= score2){
+                return -1;
+            }else{
+                return 1;
+            }
+
         }
     }
     public class TaskLengthComparator implements Comparator<Task>{
@@ -316,6 +333,7 @@ public class EdgeDataCenter {
     public void setY(double y_pos) {    this.y_pos = y_pos;    }
     public int getId(){ return id;}
     public List<Task> getReceiveReqFromTasks() {    return receiveReqFromTasks;   }
+    public List<List<Task>> getQueue() {  return queue;  }
 
     @Override
     public String toString() {

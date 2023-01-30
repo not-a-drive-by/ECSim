@@ -88,15 +88,15 @@ public class TaskGeneratorModel {
             List<Task> tList = new ArrayList<Task>();//每个设备的任务集合
             Variable.updateParetoGenerator( 0.4, deviceTaskStatic.meanLen1 );
             for(int k=0; k< (int) taskNum*deviceTaskStatic.type1Ratio; k++){
-                tList.add(new Task(deviceTaskStatic.meanLen1, 32, 2, 1690, taskID++, 0.1, k));
+                tList.add(new Task(deviceTaskStatic.meanLen1, 32, 2, 1690, taskID++, 0.1));
             }
             Variable.updateParetoGenerator( 0.4, deviceTaskStatic.meanLen2 );
             for(int k=0; k< (int) taskNum*deviceTaskStatic.type2Ratio; k++){
-                tList.add(new Task(deviceTaskStatic.meanLen2, 30, 2, 420, taskID++,0.2, k));
+                tList.add(new Task(deviceTaskStatic.meanLen2, 30, 2, 420, taskID++,0.2));
             }
             Variable.updateParetoGenerator( 0.4, deviceTaskStatic.meanLen3 );
             for(int k=0; k< (int) taskNum*deviceTaskStatic.type3Ratio; k++){
-                tList.add(new Task(deviceTaskStatic.meanLen2, 7, 2, 1690, taskID++,0.3, k));
+                tList.add(new Task(deviceTaskStatic.meanLen2, 7, 2, 1690, taskID++,0.3));
             }
 
             //打乱任务 设置到达时间
