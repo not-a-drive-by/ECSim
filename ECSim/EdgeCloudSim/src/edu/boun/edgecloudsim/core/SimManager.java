@@ -7,16 +7,19 @@ import edu.boun.edgecloudsim.edge_client.MobileDeviceManager;
 import edu.boun.edgecloudsim.edge_orchestrator.DefaultEdgeOrchestrator;
 import edu.boun.edgecloudsim.edge_orchestrator.EdgeOrchestrator;
 import edu.boun.edgecloudsim.edge_server.EdgeServerManager;
+import edu.boun.edgecloudsim.mobility.MobilityModel;
 import edu.boun.edgecloudsim.network.Channel;
 import edu.boun.edgecloudsim.network.NetworkModel;
 
 public class SimManager {
     private String simScenario;
+    private String orchestratorPolicy;
     private ScenarioFactory scenarioFactory;
     private EdgeOrchestrator edgeOrchestrator;
     private EdgeServerManager edgeServerManager;
     private MobileDeviceManager mobileDeviceManager;
     private NetworkModel networkModel;
+    private MobilityModel mobilityModel;
 
     private static SimManager instance = null;
     public static SimManager getInstance(){
@@ -26,6 +29,7 @@ public class SimManager {
     public SimManager(ScenarioFactory _scenarioFactory, int _numOfMobileDevice, String _simScenario, String _orchestratorPolicy) throws Exception {
         simScenario = _simScenario;
         scenarioFactory = _scenarioFactory;
+        orchestratorPolicy = _orchestratorPolicy;
 
         //创建服务器
         System.out.println("\r\n" + "Init Edge Servers" );
@@ -50,6 +54,8 @@ public class SimManager {
         System.out.println("\r\n" + "Init Matching Edge Orchestrator" );
         edgeOrchestrator = scenarioFactory.getEdgeOrchestrator(edgeServerManager);
 
+        //产生位移器
+        mobilityModel = scenarioFactory.getMobilityModel(mobileDeviceManager);
 
     }
 
@@ -70,16 +76,29 @@ public class SimManager {
     }
 
     public void generateQuota(){
-        edgeOrchestrator.clearPrematchTasks();//清除编排器待匹配队列
-        mobileDeviceManager.updateQuotas(networkModel, edgeOrchestrator);//产生quota并将对应任务添加到编排器
-        edgeServerManager.updateServerQuota();
+        if(orchestratorPolicy.equals("Matching")){
+            edgeOrchestrator.clearPrematchTasks();//清除编排器待匹配队列
+            mobileDeviceManager.updateQuotas(networkModel, edgeOrchestrator);//产生quota并将对应任务添加到编排器
+            edgeServerManager.updateServerQuota();
+        }else if(orchestratorPolicy.equals("Random")){
+            edgeOrchestrator.clearPrematchTasks();//清除编排器待匹配队列
+            mobileDeviceManager.updateRandom(edgeServerManager, edgeOrchestrator);
+
+        }
         System.out.println("待匹配任务集合"+edgeOrchestrator.getPreMatchTasks());
     }
 
+
     public void transmitteTasks(){
         //更新移动设备待传输队列
-        mobileDeviceManager.updateUntransQueues(networkModel);
+        if(orchestratorPolicy.equals("Matching")){
+            mobileDeviceManager.updateTransQueue_Match(networkModel);
+        }else if(orchestratorPolicy.equals("Random")){
+            mobileDeviceManager.updateTransQueue_Random(networkModel);
+        }
+
         System.out.println("更新传输队列后"+mobileDeviceManager.getMobileDevicesList());
+
     }
 
     public void processTask(double time){
@@ -92,8 +111,9 @@ public class SimManager {
         mobileDeviceManager.terminateDatacenters();
     }
 
-    //无用函数
+    //无聊函数
     public EdgeServerManager getEdgeServerManager() {   return edgeServerManager;    }
     public MobileDeviceManager getMobileDeviceManager() {   return mobileDeviceManager;   }
     public EdgeOrchestrator getEdgeOrchestrator() {    return edgeOrchestrator;    }
+    public MobilityModel getMobilityModel() {  return mobilityModel;  }
 }

@@ -52,7 +52,7 @@ public class EdgeDataCenter {
 
 
     public void updateServerQuota(){
-        quota = 1;
+        quota = 2;
     }
 
     //更新偏好序列

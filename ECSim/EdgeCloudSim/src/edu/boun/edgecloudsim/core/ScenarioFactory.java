@@ -4,6 +4,7 @@ import edu.boun.edgecloudsim.edge_client.MobileDeviceManager;
 import edu.boun.edgecloudsim.edge_orchestrator.DefaultEdgeOrchestrator;
 import edu.boun.edgecloudsim.edge_orchestrator.EdgeOrchestrator;
 import edu.boun.edgecloudsim.edge_server.EdgeServerManager;
+import edu.boun.edgecloudsim.mobility.MobilityModel;
 import edu.boun.edgecloudsim.network.NetworkModel;
 
 public interface ScenarioFactory {
@@ -35,4 +36,6 @@ public interface ScenarioFactory {
      * provides abstract Mobile Device Manager Model
      */
     public MobileDeviceManager getMobileDeviceManager() throws Exception;
+
+    public MobilityModel getMobilityModel(MobileDeviceManager mobileDeviceManager);
 }

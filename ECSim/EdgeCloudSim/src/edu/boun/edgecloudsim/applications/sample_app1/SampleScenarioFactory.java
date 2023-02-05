@@ -10,6 +10,7 @@ import edu.boun.edgecloudsim.edge_orchestrator.DefaultEdgeOrchestrator;
 import edu.boun.edgecloudsim.edge_orchestrator.EdgeOrchestrator;
 import edu.boun.edgecloudsim.edge_orchestrator.RandomEdgeOrchestrator;
 import edu.boun.edgecloudsim.edge_server.EdgeServerManager;
+import edu.boun.edgecloudsim.mobility.MobilityModel;
 import edu.boun.edgecloudsim.network.NetworkModel;
 
 public class SampleScenarioFactory implements ScenarioFactory {
@@ -76,6 +77,11 @@ public class SampleScenarioFactory implements ScenarioFactory {
     @Override
     public MobileDeviceManager getMobileDeviceManager() throws Exception {
         return new MobileDeviceManager();
+    }
+
+    @Override
+    public MobilityModel getMobilityModel( MobileDeviceManager mobileDeviceManager){
+        return new MobilityModel(mobileDeviceManager);
     }
 
 

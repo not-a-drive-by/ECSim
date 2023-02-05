@@ -10,6 +10,7 @@ import edu.boun.edgecloudsim.core.ScenarioFactory;
 import edu.boun.edgecloudsim.core.SimSettings;
 import edu.boun.edgecloudsim.edge_orchestrator.DefaultEdgeOrchestrator;
 import edu.boun.edgecloudsim.edge_orchestrator.EdgeOrchestrator;
+import edu.boun.edgecloudsim.edge_server.EdgeServerManager;
 import edu.boun.edgecloudsim.network.NetworkModel;
 import edu.boun.edgecloudsim.task_generator.DeviceTaskStatic;
 import edu.boun.edgecloudsim.task_generator.Task;
@@ -81,20 +82,34 @@ public class MobileDeviceManager {
         }
     }
 
-    //更新待卸载任务
-    public void updateUntransQueues(NetworkModel networkModel){
-        for( MobileDevice mobileDevice : mobileDevicesList ){
-            mobileDevice.updateTransQueue(networkModel);
-        }
-    }
 
-    //更新队列quota 并向Edge Orchestrator提交任务
+
+    //Matching模式下 更新队列quota 并向Edge Orchestrator提交任务
     public void updateQuotas(NetworkModel networkModel, EdgeOrchestrator edgeOrchestrator){
         for( MobileDevice mobileDevice : mobileDevicesList ){
             mobileDevice.updateQuota(networkModel, edgeOrchestrator);
         }
     }
 
+    //Random模式下 把所有任务都作为待匹配任务 向Edge Orchestrator提交任务
+    public void updateRandom(EdgeServerManager edgeServerManager, EdgeOrchestrator edgeOrchestrator){
+        for( MobileDevice mobileDevice : mobileDevicesList ){
+            mobileDevice.addAllTasks(edgeServerManager, edgeOrchestrator);
+        }
+    }
+
+    //更新待卸载任务
+    public void updateTransQueue_Match(NetworkModel networkModel){
+        for( MobileDevice mobileDevice : mobileDevicesList ){
+            mobileDevice.updateTransQueue_Match(networkModel);
+        }
+    }
+
+    public void updateTransQueue_Random(NetworkModel networkModel){
+        for( MobileDevice mobileDevice : mobileDevicesList ){
+            mobileDevice.updateTransQueue_Random(networkModel);
+        }
+    }
     public void terminateDatacenters() {
         //local computation is not supported in default Mobile Device Manager
     }

@@ -4,6 +4,7 @@ import edu.boun.edgecloudsim.core.ScenarioFactory;
 import edu.boun.edgecloudsim.edge_orchestrator.DefaultEdgeOrchestrator;
 import edu.boun.edgecloudsim.edge_orchestrator.EdgeOrchestrator;
 import edu.boun.edgecloudsim.edge_server.EdgeDataCenter;
+import edu.boun.edgecloudsim.edge_server.EdgeServerManager;
 import edu.boun.edgecloudsim.network.Channel;
 import edu.boun.edgecloudsim.network.NetworkModel;
 import edu.boun.edgecloudsim.task_generator.TaskGeneratorModel;
@@ -52,6 +53,9 @@ public class MobileDevice {
         for( Task task : tasks ){
             task.setDevice(this);
         }
+        queue.add(queue1);
+        queue.add(queue2);
+        queue.add(queue3);
 
     }
 
@@ -83,7 +87,7 @@ public class MobileDevice {
 
 
 
-    //更新quota
+    //Matching模式下更新quota
     public void updateQuota(NetworkModel networkModel, EdgeOrchestrator edgeOrchestrator){
         //1.先清除所有队列的quota
         queue.clear();
@@ -135,8 +139,8 @@ public class MobileDevice {
                 quotaSum--;
             }
         }
-        //把信道合格的服务器列表加入quota对应任务的偏好列表中 并排序
 
+        //把quota个任务添加到Orcheastator上
         for(Queue que:queue){
             int tmp = que.getQuota();
             int i = 0; //任务不会离队 所以下标记录
@@ -153,6 +157,20 @@ public class MobileDevice {
         return;
     }
 
+    //Random模式下
+    public void addAllTasks(EdgeServerManager edgeServerManager,EdgeOrchestrator edgeOrchestrator){
+        //找出对于当前设备而言的合格信道
+        List<EdgeDataCenter> allServers = edgeServerManager.getEdgeServersList();
+        for(Queue que : queue){
+            List<Task> taskList = que.getTaskQueues();
+            for(Task tmpTask : taskList){
+                tmpTask.setPreferenceList( allServers );
+                edgeOrchestrator.getPreMatchTasks().add(tmpTask);
+                System.out.println("添加到编排器了");
+            }
+        }
+    }
+
     //queue清除空白队列
     private void clearBlankQueue(){
 //        for(Queue que : queue){
@@ -165,8 +183,10 @@ public class MobileDevice {
         }
     }
 
-    //根据matching结果，将待传输任务加入集合并更新待发送队列
-    public void updateTransQueue(NetworkModel networkModel){
+    /**
+     * 根据matching结果，将待传输任务加入集合并更新待发送队列
+     * */
+    public void updateTransQueue_Match(NetworkModel networkModel){
         //根据匹配结果 更新待传输队列
         List<Task> bufferTasks = new ArrayList<Task>();
         for(Queue que:queue){
@@ -218,6 +238,48 @@ public class MobileDevice {
 
     }
 
+    public void updateTransQueue_Random(NetworkModel networkModel){
+
+        List<Task> bufferTasks = new ArrayList<Task>();
+        for(Queue que:queue){
+            List<Task> taskList = que.getTaskQueues();
+            Iterator<Task> taskIterator = taskList.iterator();
+            while(taskIterator.hasNext()){
+                Task task = taskIterator.next();
+                if(task.getTargetServer() != null){
+                    bufferTasks.add(task);
+                    taskIterator.remove();
+                }
+            }
+        }
+
+        //新到达的待卸载任务排序后依次放入，否则前面传到一半的不传了
+        Collections.sort(bufferTasks,taskComparatorByLen);
+        transQueue.addAll(bufferTasks);
+        //根据信道传输速率 更新每个任务
+        Iterator<Task> iteratorTask = transQueue.iterator();
+        while( iteratorTask.hasNext() ){
+            Task task = iteratorTask.next();
+            int serverID = task.getTargetServer().getId();
+            Channel cha = networkModel.serachChannelByDeviceandServer( mobileID, serverID);
+            if( cha.usedFlag == false ){
+                //可以传输不止一个任务、万一同一个设备有多个任务匹配到同一个服务器
+                if( cha.ratio > task.getDataSize() ){
+                    //能传输完当前任务 信道flag依旧设置为false
+                    cha.setRatio( cha.ratio - task.getDataSize() );
+                    task.setDataSize( task.getDataSize() - cha.ratio );//每个任务减去该时隙传输的内容大小
+                    task.getTargetServer().receiveOffloadTasks(task);
+                    iteratorTask.remove();
+                }else{
+                    //不足以传输完当前任务
+                    cha.usedFlag = true;
+                    task.setDataSize( task.getDataSize() - cha.ratio );//每个任务减去该时隙传输的内容大小
+                }
+
+            }
+        }
+
+    }
 
     //Queue比较器函数
     public class QueueComparatorByLen implements Comparator<Queue>

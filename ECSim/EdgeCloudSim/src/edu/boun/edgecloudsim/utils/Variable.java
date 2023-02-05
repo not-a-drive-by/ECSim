@@ -50,9 +50,9 @@ public class Variable {
 
 
     public static void main(String[] args) {
-        updatePoissonGenerator(1.2);
+        updateParetoGenerator(0.1, 1);
         for (int i=0; i<50; i++){
-            System.out.println(Poisson_Distribution());
+            System.out.println(Pareto_Distribution());
         }
     }
 
