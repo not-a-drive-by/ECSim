@@ -98,6 +98,12 @@ public class MobileDeviceManager {
         }
     }
 
+    public void updateMILP(EdgeServerManager edgeServerManager, EdgeOrchestrator edgeOrchestrator){
+        for( MobileDevice mobileDevice : mobileDevicesList ){
+            mobileDevice.addAllTasks(edgeServerManager, edgeOrchestrator);
+        }
+    }
+
     //更新待卸载任务
     public void updateTransQueue_Match(NetworkModel networkModel){
         for( MobileDevice mobileDevice : mobileDevicesList ){

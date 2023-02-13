@@ -52,11 +52,22 @@ public class EdgeServerManager {
         }
     }
 
-    public void processTasks(double time){
+    public void processTasks_Lyap(double time){
         for(EdgeDataCenter edgeDataCenter : edgeServersList){
-            edgeDataCenter.processTask(time);
+            edgeDataCenter.processTask_Lyap(time);
         }
+    }
 
+    public void processTasks_MILP(double time){
+        for(EdgeDataCenter edgeDataCenter : edgeServersList){
+            edgeDataCenter.processTask_MILP(time);
+        }
+    }
+
+    public void processTasks_SJF(double time){
+        for(EdgeDataCenter edgeDataCenter : edgeServersList){
+            edgeDataCenter.processTask_SJF(time);
+        }
     }
 
 

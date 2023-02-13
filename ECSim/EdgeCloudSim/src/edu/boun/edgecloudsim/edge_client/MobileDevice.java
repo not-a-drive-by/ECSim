@@ -157,6 +157,7 @@ public class MobileDevice {
         return;
     }
 
+    //所有任务都添加到待匹配队列
     //Random模式下
     public void addAllTasks(EdgeServerManager edgeServerManager,EdgeOrchestrator edgeOrchestrator){
         //找出对于当前设备而言的合格信道
@@ -166,7 +167,7 @@ public class MobileDevice {
             for(Task tmpTask : taskList){
                 tmpTask.setPreferenceList( allServers );
                 edgeOrchestrator.getPreMatchTasks().add(tmpTask);
-                System.out.println("添加到编排器了");
+//                System.out.println("添加到编排器了");
             }
         }
     }
@@ -239,7 +240,7 @@ public class MobileDevice {
     }
 
     public void updateTransQueue_Random(NetworkModel networkModel){
-
+        //没有quota限制了
         List<Task> bufferTasks = new ArrayList<Task>();
         for(Queue que:queue){
             List<Task> taskList = que.getTaskQueues();

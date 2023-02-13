@@ -17,7 +17,8 @@ public class sample1 {
                 "ECSim/EdgeCloudSim/scripts/sample_app1/config/edge_servers.xml");
 
 //        String orchestratorPolicy = "Matching";
-        String orchestratorPolicy = "Random";
+//        String orchestratorPolicy = "Random";
+        String orchestratorPolicy = "MILP";
 
         //创建实体类集合类
         ScenarioFactory scenarioFactory = new SampleScenarioFactory(orchestratorPolicy);
@@ -37,7 +38,7 @@ public class sample1 {
             //4. 确定移动设备参与匹配的名额
             simManager.generateQuota();
             //5. Edge Orchestrator负责完成设备与服务器之间的匹配
-            simManager.getEdgeOrchestrator().Matching();
+            simManager.getEdgeOrchestrator().Matching(simManager.getNetworkModel());
             //6. 根据匹配结果开始传输数据包
             simManager.transmitteTasks();
             //7. edgeServer开始进行资源调度

@@ -132,6 +132,7 @@ public class Task implements Serializable {//序列化后才能从文件读出
    public void setFinishTime(double finishTime) {   this.finishTime = finishTime;   }
    public void setDevice( MobileDevice mobileDevice){ this.device = mobileDevice; }
    public void setNetworkModel( NetworkModel networkModel ){ this.networkModel = networkModel; }
+   public MobileDevice getMobileDevice(){ return device; }
 
    @Override
    public String toString() {

@@ -2,6 +2,7 @@ package edu.boun.edgecloudsim.edge_orchestrator;
 
 import edu.boun.edgecloudsim.edge_server.EdgeDataCenter;
 import edu.boun.edgecloudsim.edge_server.EdgeServerManager;
+import edu.boun.edgecloudsim.network.NetworkModel;
 import edu.boun.edgecloudsim.task_generator.Task;
 
 import java.util.ArrayList;
@@ -20,7 +21,7 @@ public class DefaultEdgeOrchestrator extends EdgeOrchestrator{
     }
 
     @Override
-    public void Matching(){
+    public void Matching(NetworkModel networkModel){
         boolean fisrtTime = true;
         boolean sendRequestFlag = true;
         boolean rejectRequestFlag = false;

@@ -76,14 +76,14 @@ public class SimManager {
     }
 
     public void generateQuota(){
+        edgeOrchestrator.clearPrematchTasks();//清除编排器待匹配队列
         if(orchestratorPolicy.equals("Matching")){
-            edgeOrchestrator.clearPrematchTasks();//清除编排器待匹配队列
             mobileDeviceManager.updateQuotas(networkModel, edgeOrchestrator);//产生quota并将对应任务添加到编排器
             edgeServerManager.updateServerQuota();
         }else if(orchestratorPolicy.equals("Random")){
-            edgeOrchestrator.clearPrematchTasks();//清除编排器待匹配队列
             mobileDeviceManager.updateRandom(edgeServerManager, edgeOrchestrator);
-
+        }else if(orchestratorPolicy.equals("MILP")){
+            mobileDeviceManager.updateMILP(edgeServerManager, edgeOrchestrator);
         }
         System.out.println("待匹配任务集合"+edgeOrchestrator.getPreMatchTasks());
     }
@@ -95,6 +95,8 @@ public class SimManager {
             mobileDeviceManager.updateTransQueue_Match(networkModel);
         }else if(orchestratorPolicy.equals("Random")){
             mobileDeviceManager.updateTransQueue_Random(networkModel);
+        }else if(orchestratorPolicy.equals("MILP")){
+            mobileDeviceManager.updateTransQueue_Random(networkModel);
         }
 
         System.out.println("更新传输队列后"+mobileDeviceManager.getMobileDevicesList());
@@ -102,7 +104,13 @@ public class SimManager {
     }
 
     public void processTask(double time){
-        edgeServerManager.processTasks(time);
+        if(orchestratorPolicy.equals("Matching")){
+            edgeServerManager.processTasks_Lyap(time);
+        }else if(orchestratorPolicy.equals("Random")){
+            edgeServerManager.processTasks_Lyap(time);
+        }else if(orchestratorPolicy.equals("MILP")){
+            edgeServerManager.processTasks_MILP(time);
+        }
         System.out.println("节点内资源调度后"+edgeServerManager.getEdgeServersList());
     }
 
@@ -116,4 +124,5 @@ public class SimManager {
     public MobileDeviceManager getMobileDeviceManager() {   return mobileDeviceManager;   }
     public EdgeOrchestrator getEdgeOrchestrator() {    return edgeOrchestrator;    }
     public MobilityModel getMobilityModel() {  return mobilityModel;  }
+    public NetworkModel getNetworkModel(){ return networkModel; }
 }

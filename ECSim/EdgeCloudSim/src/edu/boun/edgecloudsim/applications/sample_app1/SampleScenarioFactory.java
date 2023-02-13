@@ -8,6 +8,7 @@ import edu.boun.edgecloudsim.core.ScenarioFactory;
 import edu.boun.edgecloudsim.edge_client.MobileDeviceManager;
 import edu.boun.edgecloudsim.edge_orchestrator.DefaultEdgeOrchestrator;
 import edu.boun.edgecloudsim.edge_orchestrator.EdgeOrchestrator;
+import edu.boun.edgecloudsim.edge_orchestrator.MILPEdgeOrchestrator;
 import edu.boun.edgecloudsim.edge_orchestrator.RandomEdgeOrchestrator;
 import edu.boun.edgecloudsim.edge_server.EdgeServerManager;
 import edu.boun.edgecloudsim.mobility.MobilityModel;
@@ -70,6 +71,8 @@ public class SampleScenarioFactory implements ScenarioFactory {
             return (EdgeOrchestrator) new DefaultEdgeOrchestrator(edgeServerManager);
         }else if( orchestratorPolicy.equals( "Random" ) ){
             return (EdgeOrchestrator) new RandomEdgeOrchestrator(edgeServerManager);
+        }else if( orchestratorPolicy.equals( "MILP" ) ){
+            return (EdgeOrchestrator) new MILPEdgeOrchestrator(edgeServerManager);
         }
         return (EdgeOrchestrator) new DefaultEdgeOrchestrator(edgeServerManager);
     }

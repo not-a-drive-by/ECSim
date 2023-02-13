@@ -10,10 +10,7 @@ import edu.boun.edgecloudsim.utils.Variable;
 import org.w3c.dom.Document;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 public class TaskGeneratorModel {
 
@@ -77,6 +74,7 @@ public class TaskGeneratorModel {
     private static ArrayList<List<Task>> produceTask(ArrayList<DeviceTaskStatic> MobileDeviceStatic){
         ArrayList<List<Task>> taskList = new ArrayList<List<Task>>();
         int taskID = 1;
+        Random r = new Random();
 
         Variable.updatePoissonGenerator(2);
 
@@ -86,17 +84,17 @@ public class TaskGeneratorModel {
             int taskNum = deviceTaskStatic.taskNum;//一个设备的任务总数
 
             List<Task> tList = new ArrayList<Task>();//每个设备的任务集合
-            Variable.updateParetoGenerator( 0.4, deviceTaskStatic.meanLen1 );
             for(int k=0; k< (int) taskNum*deviceTaskStatic.type1Ratio; k++){
-                tList.add(new Task(deviceTaskStatic.meanLen1, 32, 2, 1690, taskID++, 0.1));
+//                tList.add(new Task(deviceTaskStatic.meanLen1, 32, 2, 1690, taskID++, 0.1));
+                tList.add(new Task(r.nextInt(3), 32, 2, 1690, taskID++, 0.1));
             }
             Variable.updateParetoGenerator( 0.4, deviceTaskStatic.meanLen2 );
             for(int k=0; k< (int) taskNum*deviceTaskStatic.type2Ratio; k++){
-                tList.add(new Task(deviceTaskStatic.meanLen2, 30, 2, 420, taskID++,0.2));
+                tList.add(new Task(r.nextInt(6), 30, 2, 420, taskID++,0.2));
             }
             Variable.updateParetoGenerator( 0.4, deviceTaskStatic.meanLen3 );
             for(int k=0; k< (int) taskNum*deviceTaskStatic.type3Ratio; k++){
-                tList.add(new Task(deviceTaskStatic.meanLen2, 7, 2, 1690, taskID++,0.3));
+                tList.add(new Task(r.nextInt(9), 7, 2, 1690, taskID++,0.3));
             }
 
             //打乱任务 设置到达时间

@@ -9,9 +9,12 @@ import edu.boun.edgecloudsim.edge_client.Queue;
 import edu.boun.edgecloudsim.statistic.Data;
 import edu.boun.edgecloudsim.task_generator.Task;
 import edu.boun.edgecloudsim.utils.StaticfinalTags;
+import ilog.concert.IloException;
+import org.cloudbus.cloudsim.Storage;
 import org.w3c.dom.Element;
-
 import java.util.*;
+import ilog.concert.*;
+import ilog.cplex.IloCplex;
 
 public class EdgeDataCenter {
 
@@ -168,24 +171,36 @@ public class EdgeDataCenter {
 
         int policy[];
         int queuelength[]=new int[3];
-
+        double[] queueSize = new double[3];
 
         double avedpp[]=new double[matrix.size()];//记录每种虚拟机组合下的平均工作时间
 
         int num[]=new int[3];//每种VM组合的虚拟机台数
         int tmpnum[]=new int[3];//暂存此时刻后三个队列处理到的任务id
-        double sum[]=new double[matrix.size()];//记录一种VM组合下至今为止三种工作的总时间
         int sumnum=0;//记录一种VM组合下至今为止三种工作的总数量
 
+        //队列任务个数
         queuelength[0]=queue1.size();
         queuelength[1]=queue2.size();
         queuelength[2]=queue3.size();
+
+        //队列任务实际长度
+        queueSize[0]=queueSize[1]=queueSize[2]=0;
+        for( Task task : queue1 ){
+            queueSize[0] += task.length;
+        }
+        for( Task task : queue2 ){
+            queueSize[1] += task.length;
+        }
+        for( Task task : queue3 ){
+            queueSize[2] += task.length;
+        }
 
         //找最小
         for(int i=0;i<matrix.size();i++)//矩阵中的每一行
         {
             double pen[] = new double[3];//惩罚项
-            int qmw[] = new int[3];
+            double qmw[] = new double[3];
             sumnum=0;
             tmpnum[0]=tmpnum[1]=tmpnum[2]=0;
             num[0]=matrix.get(i)[0];//第i行组合对应的虚拟机台数
@@ -199,11 +214,15 @@ public class EdgeDataCenter {
 
             sumnum = tmpnum[0]+tmpnum[1]+tmpnum[2];
 
-            qmw[0] = (queuelength[0] - num[0]) * tmpnum[0];
-            qmw[1] = (queuelength[1] - num[1]) * tmpnum[1];
-            qmw[2] = (queuelength[2] - num[2]) * tmpnum[2];
-            //System.out.println();
-            //System.out.print("处理数量："+tmpnum[0]+"&"+tmpnum[1]+"&"+tmpnum[2]);System.out.println();
+//            qmw[0] = (queuelength[0] - num[0]) * tmpnum[0];
+//            qmw[1] = (queuelength[1] - num[1]) * tmpnum[1];
+//            qmw[2] = (queuelength[2] - num[2]) * tmpnum[2];
+
+            qmw[0] = queueSize[0] * tmpnum[0];
+            qmw[1] = queueSize[1] * tmpnum[1];
+            qmw[2] = queueSize[2] * tmpnum[2];
+
+
             for(int m=0;m<tmpnum[0];m++)//第一类任务在当前时刻完成的总时长和任务数
             {
                 pen[0] += ( time - queue1.get(m).getArrivalTime() + queue1.get(m).getLength() )/ (3*tmpnum[0]);
@@ -220,7 +239,8 @@ public class EdgeDataCenter {
 
             }
             if(sumnum!=0){
-                avedpp[i] = -(qmw[0]+qmw[1]+qmw[2])+ StaticfinalTags.alpha*(pen[0]+pen[1]+pen[2]);
+                System.out.println("Lyap计算结果"+(qmw[0]+qmw[1]+qmw[2])+"和"+(pen[0]+pen[1]+pen[2]));
+                avedpp[i] = -(qmw[0]+qmw[1]+qmw[2]) + StaticfinalTags.alpha*(pen[0]+pen[1]+pen[2]);
             }else{
                 avedpp[i] = Double.POSITIVE_INFINITY;
             }
@@ -243,8 +263,8 @@ public class EdgeDataCenter {
     //根据选择虚拟机组合创建虚拟机
     public void createVMs(int[] policy, double time){
         for(int i=0; i<3; i++){
-            if( queue.get(i).size() == 0) break;
-            int taskNum = policy[i];
+            if( queue.get(i).size() == 0) continue;
+            int taskNum = Math.min(policy[i], queue.get(i).size());
             for(int j=0; j<taskNum; j++){
                 Task tmptask = queue.get(i).get(0);
                 tmptask.setFinishTime( time + tmptask.length );
@@ -271,16 +291,138 @@ public class EdgeDataCenter {
 
     }
 
-    //资源调度总函数
-    public void processTask(double time){
+
+    /**
+     * 李亚资源调度总函数
+     * */
+    public void processTask_Lyap(double time){
+        terminateVMS(time);
         //所有任务按照长度排序
         for( List<Task> que : queue ){
             Collections.sort(que, taskLengthComparator);
         }
         ArrayList<int[]> feasableMatrix = createMatrix();
+//        System.out.println("积压情况"+queue1.size()+queue2.size()+queue3.size());
+//        System.out.println("可行矩阵");
+//        for( int[] a : feasableMatrix){
+//            System.out.print(Arrays.toString(a));
+//        }
         int[] selectedPolicy = selectPolicy( feasableMatrix, time);
+//        System.out.println("选择了行向量"+Arrays.toString(selectedPolicy));
         createVMs(selectedPolicy, time);
+    }
+
+    /**
+     * SJF调度总函数
+     * */
+    public void processTask_SJF(double time){
         terminateVMS(time);
+        List<Task> bufferTaskList = new ArrayList<Task>();
+        //所有任务按照长度排序
+        for( List<Task> que : queue ){
+            bufferTaskList.addAll(que);
+        }
+        Collections.sort(bufferTaskList, taskLengthComparator);
+        Iterator<Task> taskIterator = bufferTaskList.iterator();
+        while(taskIterator.hasNext()){
+            Task task = taskIterator.next();
+            int[] require = {task.CPU, task.RAM, task.storage};
+            int[] remain = returnRemainResource();
+            if( remain[0]>=require[0] && remain[1]>=require[1] && remain[2]>=require[2]){
+                task.setFinishTime( time + task.length );
+                activeVM.add( new EdgeVM(task, time) );
+                queue.get(task.getType()-1).remove(task);
+
+
+            }
+        }
+    }
+
+    /**
+     * MILP调度算法
+     * */
+    public void processTask_MILP(double time){
+        terminateVMS(time);
+        List<Task> bufferTaskList = new ArrayList<Task>();
+        //所有任务按照长度排序
+        for( List<Task> que : queue ){
+            bufferTaskList.addAll(que);
+        }
+        try{
+            // 声明cplex优化模型
+            IloCplex cplex = new IloCplex();
+
+            // 设定变量上下限
+            int[] lb = new int[bufferTaskList.size()];
+            Arrays.fill(lb, 0);
+            int[] ub = new int[bufferTaskList.size()];
+            Arrays.fill(ub,1);
+            IloIntVar[] x = cplex.intVarArray(bufferTaskList.size(),lb,ub);
+
+            //设定目标函数
+            IloNumExpr cs1 = cplex.numExpr(); //表达式
+            IloNumExpr cs2 = cplex.numExpr();
+            for(int i=0; i<bufferTaskList.size();i++){
+                Task task = bufferTaskList.get(i);
+                double delay = StaticfinalTags.curTime - task.arrivalTime + task.length;
+                cs1 = cplex.sum( cs1, cplex.prod(x[i], delay));
+
+                cs2 = cplex.sum( cs2, cplex.prod(x[i], task.CPU));
+                cs2 = cplex.sum( cs2, cplex.prod(x[i], task.RAM));
+                cs2 = cplex.sum( cs2, cplex.prod(x[i], task.storage));
+
+            }
+            cs1 = cplex.prod(cs1, -1);
+            cs2 = cplex.prod(cs2, 0.5);
+//            cs1 = cplex.sum(cs1, cs2);
+//            cplex.addMinimize(cs1);
+            cplex.addMaximize(cs2);
+//            cplex.addMaximize(cs1);
+
+
+
+            //设定限制条件
+            IloNumExpr cs3 = cplex.numExpr();
+            IloNumExpr cs4 = cplex.numExpr();
+            IloNumExpr cs5 = cplex.numExpr();
+            for(int i=0; i<bufferTaskList.size();i++){
+                Task task = bufferTaskList.get(i);
+                cs3 = cplex.sum(cs3, cplex.prod(x[i], (double) task.CPU));
+                cs4 = cplex.sum(cs4, cplex.prod(x[i], (double)task.RAM));
+                cs5 = cplex.sum(cs5, cplex.prod(x[i], (double)task.CPU));
+            }
+            cplex.addLe(cs3, CPU);
+            cplex.addLe(cs4, RAM);
+            cplex.addLe(cs5, storage);
+
+            //模型求解
+            double[] val = new double[bufferTaskList.size()];
+            if (cplex.solve()) {
+                // cplex.output()，数据输出，功能类似System.out.println();
+//                cplex.output().println("Solution status = " + cplex.getStatus());  // cplex.getStatus：求解状态，成功则为Optimal
+                // cplex.getObjValue()：目标函数的最优值
+//                cplex.output().println("Solution value = " + cplex.getObjValue());
+                // cplex.getValues(x)：变量x的最优值
+                val = cplex.getValues(x);
+//                for (int j = 0; j < val.length; j++)
+//                    cplex.output().println("x" + (j+1) + "  = " + val[j]);
+            }
+            // 退出优化模型
+            cplex.end();
+
+
+            for (int j = 0; j < bufferTaskList.size(); j++){
+//                System.out.println("共" +val.length+ "个，" +"x" + (j+1) + "  = " + val[j]);
+                if( val[j] == 1.0 ){
+                    Task task = bufferTaskList.get(j);
+                    task.setFinishTime( time + task.length);
+                    activeVM.add( new EdgeVM(task, time) );
+                    queue.get(task.getType()-1).remove(task);
+                }
+            }
+
+        } catch (IloException e){
+            System.err.println("Concert exception caught: " + e);        }
     }
 
     //关闭所有的Host和VM

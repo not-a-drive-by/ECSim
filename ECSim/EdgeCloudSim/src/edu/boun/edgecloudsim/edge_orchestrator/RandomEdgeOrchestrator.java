@@ -2,6 +2,7 @@ package edu.boun.edgecloudsim.edge_orchestrator;
 
 import edu.boun.edgecloudsim.edge_server.EdgeDataCenter;
 import edu.boun.edgecloudsim.edge_server.EdgeServerManager;
+import edu.boun.edgecloudsim.network.NetworkModel;
 import edu.boun.edgecloudsim.task_generator.Task;
 
 import java.util.ArrayList;
@@ -21,7 +22,7 @@ public class RandomEdgeOrchestrator extends EdgeOrchestrator {
     }
 
     @Override
-    public void Matching(){
+    public void Matching(NetworkModel networkModel){
         for ( Task task : preMatchTasks ){
             if( task.getPreferenceList().size()!=0 ){
                 int ran = r.nextInt( task.getPreferenceList().size() - 1 );

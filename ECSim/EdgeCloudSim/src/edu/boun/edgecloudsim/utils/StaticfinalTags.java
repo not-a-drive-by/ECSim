@@ -2,7 +2,7 @@ package edu.boun.edgecloudsim.utils;
 
 public final class StaticfinalTags {
     /**penalty项系数**/
-    public static final double alpha = 0.05;
+    public static final double alpha = 1;
 
     /**任务数量**/
     public static final int CloudletNum = 200;

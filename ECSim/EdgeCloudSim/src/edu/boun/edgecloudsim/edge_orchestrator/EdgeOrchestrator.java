@@ -7,6 +7,7 @@
 package edu.boun.edgecloudsim.edge_orchestrator;
 
 import edu.boun.edgecloudsim.edge_server.EdgeDataCenter;
+import edu.boun.edgecloudsim.network.NetworkModel;
 import edu.boun.edgecloudsim.task_generator.Task;
 
 import java.util.ArrayList;
@@ -20,7 +21,7 @@ public abstract class EdgeOrchestrator {
         preMatchTasks.clear();
     }
 
-    public void Matching(){
+    public void Matching(NetworkModel networkModel){
 
     }
 
