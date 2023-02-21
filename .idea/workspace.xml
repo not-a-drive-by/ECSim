@@ -2,10 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="18a26140-92e0-43de-8a37-25fa308ba712" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/ECSim _ada.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/ECSim _ada.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TaskInformation.txt" beforeDir="false" afterPath="$PROJECT_DIR$/TaskInformation.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/ECSim _ada/edu/boun/edgecloudsim/applications/sample_app1/Random.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ECSim _ada/edu/boun/edgecloudsim/edge_server/EdgeDataCenter$TaskLengthComparator.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ECSim _ada/edu/boun/edgecloudsim/edge_server/EdgeDataCenter$TaskLengthComparator.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ECSim _ada/edu/boun/edgecloudsim/edge_server/EdgeDataCenter$TaskPreferenceComparator.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ECSim _ada/edu/boun/edgecloudsim/edge_server/EdgeDataCenter$TaskPreferenceComparator.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ECSim _ada/edu/boun/edgecloudsim/edge_server/EdgeDataCenter.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ECSim _ada/edu/boun/edgecloudsim/edge_server/EdgeDataCenter.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,7 +56,7 @@
       <recent name="D:\Lyap\ECSim_ada\ECSim\EdgeCloudSim\src\edu\boun\edgecloudsim\static" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.test">
+  <component name="RunManager" selected="Application.sample1">
     <configuration name="TaskGeneratorModel" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="edu.boun.edgecloudsim.task_generator.TaskGeneratorModel" />
       <module name="ECSim _ada" />
@@ -119,8 +119,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.test" />
         <item itemvalue="Application.sample1" />
+        <item itemvalue="Application.test" />
         <item itemvalue="Application.TaskGeneratorModel" />
         <item itemvalue="Application.Variable" />
       </list>
@@ -154,6 +154,12 @@
       <workItem from="1675598739944" duration="11127000" />
       <workItem from="1676014456472" duration="3403000" />
       <workItem from="1676121767294" duration="34220000" />
+      <workItem from="1676365915263" duration="201000" />
+      <workItem from="1676460414449" duration="12000" />
+      <workItem from="1676521669998" duration="25000" />
+      <workItem from="1676522008092" duration="598000" />
+      <workItem from="1676946291185" duration="1540000" />
+      <workItem from="1676954914552" duration="207000" />
     </task>
     <servers />
   </component>

@@ -360,8 +360,8 @@ public class EdgeDataCenter {
             IloIntVar[] x = cplex.intVarArray(bufferTaskList.size(),lb,ub);
 
             //设定目标函数
-            IloNumExpr cs1 = cplex.numExpr(); //表达式
-            IloNumExpr cs2 = cplex.numExpr();
+            IloNumExpr cs1 = cplex.numExpr(); //最小化时延目标表达式
+            IloNumExpr cs2 = cplex.numExpr(); //最大化资源利用率目标表达式
             for(int i=0; i<bufferTaskList.size();i++){
                 Task task = bufferTaskList.get(i);
                 double delay = StaticfinalTags.curTime - task.arrivalTime + task.length;
@@ -374,9 +374,9 @@ public class EdgeDataCenter {
             }
             cs1 = cplex.prod(cs1, -1);
             cs2 = cplex.prod(cs2, 0.5);
-//            cs1 = cplex.sum(cs1, cs2);
+            cs1 = cplex.sum(cs1, cs2);
 //            cplex.addMinimize(cs1);
-            cplex.addMaximize(cs2);
+            cplex.addMaximize(cs1);
 //            cplex.addMaximize(cs1);
 
 
@@ -385,15 +385,16 @@ public class EdgeDataCenter {
             IloNumExpr cs3 = cplex.numExpr();
             IloNumExpr cs4 = cplex.numExpr();
             IloNumExpr cs5 = cplex.numExpr();
+            int[] remainResource = returnRemainResource();
             for(int i=0; i<bufferTaskList.size();i++){
                 Task task = bufferTaskList.get(i);
-                cs3 = cplex.sum(cs3, cplex.prod(x[i], (double) task.CPU));
-                cs4 = cplex.sum(cs4, cplex.prod(x[i], (double)task.RAM));
-                cs5 = cplex.sum(cs5, cplex.prod(x[i], (double)task.CPU));
+                cs3 = cplex.sum(cs3, cplex.prod(x[i], task.CPU));
+                cs4 = cplex.sum(cs4, cplex.prod(x[i], task.RAM));
+                cs5 = cplex.sum(cs5, cplex.prod(x[i], task.storage));
             }
-            cplex.addLe(cs3, CPU);
-            cplex.addLe(cs4, RAM);
-            cplex.addLe(cs5, storage);
+            cplex.addLe(cs3, remainResource[0]);
+            cplex.addLe(cs4, remainResource[1]);
+            cplex.addLe(cs5, remainResource[2]);
 
             //模型求解
             double[] val = new double[bufferTaskList.size()];

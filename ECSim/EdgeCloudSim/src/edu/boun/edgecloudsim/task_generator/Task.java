@@ -96,8 +96,8 @@ public class Task implements Serializable {//序列化后才能从文件读出
          for(int i=0; i<3; i++){
             resource2 += remainresource2[i];
          }
-         int len1 = s1.getQueue().get(getType()-1).size()==0 ? 1 : s1.getQueue().get(getType()-1).size();
-         int len2 = s2.getQueue().get(getType()-1).size()==0 ? 1 :s2.getQueue().get(getType()-1).size();
+         double len1 = s1.getQueue().get(getType()-1).size()==0 ? 0.5 : s1.getQueue().get(getType()-1).size();
+         double len2 = s2.getQueue().get(getType()-1).size()==0 ? 0.5 :s2.getQueue().get(getType()-1).size();
          double score1 = cha1.ratio*resource1/len1;
          double score2 = cha2.ratio*resource2/len2;
 
