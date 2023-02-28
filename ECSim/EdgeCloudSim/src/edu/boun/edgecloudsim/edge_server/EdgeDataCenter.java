@@ -5,7 +5,6 @@
 
 package edu.boun.edgecloudsim.edge_server;
 
-import edu.boun.edgecloudsim.edge_client.Queue;
 import edu.boun.edgecloudsim.statistic.Data;
 import edu.boun.edgecloudsim.task_generator.Task;
 import edu.boun.edgecloudsim.utils.StaticfinalTags;
@@ -20,12 +19,15 @@ public class EdgeDataCenter {
 
     //自身属性
     private int id;
-    private int CPU;
-    private int RAM;
-    private int storage;
+    public int CPU;
+    public int RAM;
+    public int storage;
     private double x_pos;
     private double y_pos;
     private int quota;
+
+    //SUAC算法需要的最大虚拟机运行数
+    public int N_max;
 
     private List<Task> queue1 = new ArrayList<Task>();
     private List<Task> queue2 = new ArrayList<Task>();
@@ -33,7 +35,7 @@ public class EdgeDataCenter {
     private List<List<Task>> queue = new ArrayList<List<Task>>();
 
     private List<Task> receiveReqFromTasks = new ArrayList<Task>();
-    private List<EdgeVM> activeVM = new ArrayList<EdgeVM>();
+    public List<EdgeVM> activeVM = new ArrayList<EdgeVM>();
 
     //比较器实例
     TaskPreferenceComparator taskPreferenceComparator = new TaskPreferenceComparator();
@@ -50,6 +52,18 @@ public class EdgeDataCenter {
         this.queue.add(queue1);
         this.queue.add(queue2);
         this.queue.add(queue3);
+
+        //计算能运行的最大虚拟机数
+        List<int[]> totalConfig = createMatrix();
+        int tmp_max = 0;
+        for( int[] m : totalConfig){
+            int sum = 0;
+            for( int num : m){
+                sum += num;
+            }
+            tmp_max = sum>tmp_max ? sum : tmp_max;
+        }
+        N_max = tmp_max;
     }
 
 
@@ -312,9 +326,7 @@ public class EdgeDataCenter {
         createVMs(selectedPolicy, time);
     }
 
-    /**
-     * SJF调度总函数
-     * */
+    /** SJF调度总函数 */
     public void processTask_SJF(double time){
         terminateVMS(time);
         List<Task> bufferTaskList = new ArrayList<Task>();
@@ -338,9 +350,29 @@ public class EdgeDataCenter {
         }
     }
 
-    /**
-     * MILP调度算法
-     * */
+    /** FCFS调度算法 */
+    public void processTask_FCFS(double time){
+        terminateVMS(time);
+        List<Task> bufferTaskList = new ArrayList<Task>();
+        //添加所有任务 不排序
+        for( List<Task> que : queue ){
+            bufferTaskList.addAll(que);
+        }
+        Iterator<Task> taskIterator = bufferTaskList.iterator();
+        while(taskIterator.hasNext()){
+            Task task = taskIterator.next();
+            int[] require = {task.CPU, task.RAM, task.storage};
+            int[] remain = returnRemainResource();
+            //为了提高性能这里可以改 但是懒得管了
+            if( remain[0]>=require[0] && remain[1]>=require[1] && remain[2]>=require[2]){
+                task.setFinishTime( time + task.length );
+                activeVM.add( new EdgeVM(task, time) );
+                queue.get(task.getType()-1).remove(task);
+            }
+        }
+    }
+
+    /** MILP调度算法 */
     public void processTask_MILP(double time){
         terminateVMS(time);
         List<Task> bufferTaskList = new ArrayList<Task>();
@@ -477,6 +509,13 @@ public class EdgeDataCenter {
     public int getId(){ return id;}
     public List<Task> getReceiveReqFromTasks() {    return receiveReqFromTasks;   }
     public List<List<Task>> getQueue() {  return queue;  }
+    public int getQueueLength(){
+        int res = 0;
+        for(List<Task> que : queue){
+            res += que.size();
+        }
+        return res;
+    }
 
     @Override
     public String toString() {

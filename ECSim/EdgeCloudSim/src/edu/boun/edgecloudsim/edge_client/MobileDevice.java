@@ -239,7 +239,7 @@ public class MobileDevice {
 
     }
 
-    public void updateTransQueue_Random(NetworkModel networkModel){
+    public void updateTransQueue(NetworkModel networkModel){
         //没有quota限制了
         List<Task> bufferTasks = new ArrayList<Task>();
         for(Queue que:queue){

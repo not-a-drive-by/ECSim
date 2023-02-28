@@ -18,7 +18,8 @@ public class sample1 {
 
 //        String orchestratorPolicy = "Matching";
 //        String orchestratorPolicy = "Random";
-        String orchestratorPolicy = "MILP";
+//        String orchestratorPolicy = "MILP";
+        String orchestratorPolicy = "SUAC";
 
         //创建实体类集合类
         ScenarioFactory scenarioFactory = new SampleScenarioFactory(orchestratorPolicy);
@@ -27,7 +28,7 @@ public class sample1 {
 
 
         //时隙大循环
-        for(int t=0; t<500; t++){
+        for(int t=0; t<1; t++){
             StaticfinalTags.curTime++;
             //1. 更新mobileDevice的待处理待发送队列 edgeServer的待处理队列
             simManager.updateQueues(t, scenarioFactory);

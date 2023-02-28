@@ -64,6 +64,12 @@ public class EdgeServerManager {
         }
     }
 
+    public void processTasks_FCFS(double time){
+        for(EdgeDataCenter edgeDataCenter : edgeServersList){
+            edgeDataCenter.processTask_FCFS(time);
+        }
+    }
+
     public void processTasks_SJF(double time){
         for(EdgeDataCenter edgeDataCenter : edgeServersList){
             edgeDataCenter.processTask_SJF(time);

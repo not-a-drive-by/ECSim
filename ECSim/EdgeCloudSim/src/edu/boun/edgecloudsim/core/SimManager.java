@@ -80,10 +80,8 @@ public class SimManager {
         if(orchestratorPolicy.equals("Matching")){
             mobileDeviceManager.updateQuotas(networkModel, edgeOrchestrator);//产生quota并将对应任务添加到编排器
             edgeServerManager.updateServerQuota();
-        }else if(orchestratorPolicy.equals("Random")){
-            mobileDeviceManager.updateRandom(edgeServerManager, edgeOrchestrator);
-        }else if(orchestratorPolicy.equals("MILP")){
-            mobileDeviceManager.updateMILP(edgeServerManager, edgeOrchestrator);
+        }else {
+            mobileDeviceManager.updateAll(edgeServerManager, edgeOrchestrator);
         }
         System.out.println("待匹配任务集合"+edgeOrchestrator.getPreMatchTasks());
     }
@@ -93,10 +91,8 @@ public class SimManager {
         //更新移动设备待传输队列
         if(orchestratorPolicy.equals("Matching")){
             mobileDeviceManager.updateTransQueue_Match(networkModel);
-        }else if(orchestratorPolicy.equals("Random")){
-            mobileDeviceManager.updateTransQueue_Random(networkModel);
-        }else if(orchestratorPolicy.equals("MILP")){
-            mobileDeviceManager.updateTransQueue_Random(networkModel);
+        }else {
+            mobileDeviceManager.updateTransQueue(networkModel);
         }
 
         System.out.println("更新传输队列后"+mobileDeviceManager.getMobileDevicesList());
@@ -110,6 +106,8 @@ public class SimManager {
             edgeServerManager.processTasks_Lyap(time);
         }else if(orchestratorPolicy.equals("MILP")){
             edgeServerManager.processTasks_MILP(time);
+        }else if(orchestratorPolicy.equals("SUAC")){
+            edgeServerManager.processTasks_SJF(time);
         }
         System.out.println("节点内资源调度后"+edgeServerManager.getEdgeServersList());
     }

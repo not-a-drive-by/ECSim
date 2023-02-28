@@ -91,29 +91,23 @@ public class MobileDeviceManager {
         }
     }
 
-    //Random模式下 把所有任务都作为待匹配任务 向Edge Orchestrator提交任务
-    public void updateRandom(EdgeServerManager edgeServerManager, EdgeOrchestrator edgeOrchestrator){
+    //其余模式下 把所有任务都作为待匹配任务 向Edge Orchestrator提交任务
+    public void updateAll(EdgeServerManager edgeServerManager, EdgeOrchestrator edgeOrchestrator){
         for( MobileDevice mobileDevice : mobileDevicesList ){
             mobileDevice.addAllTasks(edgeServerManager, edgeOrchestrator);
         }
     }
 
-    public void updateMILP(EdgeServerManager edgeServerManager, EdgeOrchestrator edgeOrchestrator){
-        for( MobileDevice mobileDevice : mobileDevicesList ){
-            mobileDevice.addAllTasks(edgeServerManager, edgeOrchestrator);
-        }
-    }
-
-    //更新待卸载任务
+    //传输待卸载任务
     public void updateTransQueue_Match(NetworkModel networkModel){
         for( MobileDevice mobileDevice : mobileDevicesList ){
             mobileDevice.updateTransQueue_Match(networkModel);
         }
     }
 
-    public void updateTransQueue_Random(NetworkModel networkModel){
+    public void updateTransQueue(NetworkModel networkModel){
         for( MobileDevice mobileDevice : mobileDevicesList ){
-            mobileDevice.updateTransQueue_Random(networkModel);
+            mobileDevice.updateTransQueue(networkModel);
         }
     }
     public void terminateDatacenters() {
