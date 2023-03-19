@@ -22,9 +22,10 @@ public class SUACEdgeOrchestrator extends EdgeOrchestrator{
     public void Matching(NetworkModel networkModel){
         int m = preMatchTasks.size();
         int c = EdgeServers.size();
+
         if( m != 0 && c!= 0) {
             try {
-                System.out.print("进来了");
+                System.out.print("进来了"+m+" "+c);
                 /** 声明cplex优化模型 */
                 IloCplex cplex = new IloCplex();
 
@@ -45,29 +46,28 @@ public class SUACEdgeOrchestrator extends EdgeOrchestrator{
                     }
                     EdgeDataCenter server = EdgeServers.get(i);
 
-                    double K = 7*5/2/server.N_max; //session length不知道咋定
-                    double Ms = server.activeVM.size() - server.N_max + server.getQueueLength();
+                    double K = 7*20/2/server.N_max; //session length不知道咋定
+                    double Ms =server.activeVM.size() - server.N_max + server.getQueueLength();
                     double ps = server.getQueueLength() + 0.3*( K*( 2*Ms + 1) - 300);
 
                     cs1 = cplex.sum( cs1, cplex.prod(cs_as, ps));
                     cs_as = cplex.prod(cs_as, cs_as);
-                    cs1 = cplex.sum( cs1, cplex.prod(cs_as, 300*K) );
+                    cs1 = cplex.sum( cs1, cplex.prod(cs_as, 0.3*K) );
 
                 }
 
-                cplex.addMaximize(cs1);
-
+                cplex.addMinimize(cs1);
 
                 /** 设定限制条件 */
                 //限制任务必须卸载至一个服务器
-                IloNumExpr cs3 = cplex.numExpr();
+                IloNumExpr cs3 ;
                 for (int i = 0; i < m; i++) { //task
+                    cs3 = cplex.numExpr();
                     for (int j = 0; j < c; j++) { //server
 
                         cs3 = cplex.sum(cs3, x[i][j]);
                     }
                     cplex.addEq(cs3, 1);
-                    cs3 = cplex.numExpr(); //每一行新建一个
                 }
 
                 /** 模型求解 */

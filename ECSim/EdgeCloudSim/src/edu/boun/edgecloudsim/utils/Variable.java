@@ -1,6 +1,8 @@
 package edu.boun.edgecloudsim.utils;
 
 import java.util.Random;
+
+import org.apache.commons.math3.distribution.ExponentialDistribution;
 import org.apache.commons.math3.distribution.ParetoDistribution;
 import org.apache.commons.math3.distribution.PoissonDistribution;
 import org.apache.commons.math3.random.Well19937c;
@@ -10,6 +12,7 @@ public class Variable {
 
     public static ParetoDistribution taskLenRNG = new ParetoDistribution();
     public static PoissonDistribution intervalRNG = new PoissonDistribution(2);
+    public static ExponentialDistribution expRNG = new ExponentialDistribution(2);
 
     //信道增益中 信道参数 指数分布
     public static int expRnd (double lambda) {
@@ -30,15 +33,16 @@ public class Variable {
         double shape = mean / ( mean - Xmin );
         taskLenRNG = new ParetoDistribution( Xmin, shape);
     }
-    public static double Pareto_Distribution(){
+    public static int Pareto_Distribution(){
         double p = taskLenRNG.sample();
-        int tmp;
-        tmp =  (int) Math.ceil(p*10);
-        double res = (double) tmp/10;
+//        int tmp;
+//        tmp =  (int) Math.ceil(p*10);
+//        double res = (double) tmp/10;
+        int res = (int) Math.ceil(p);
         return res;
     }
 
-    //任务到达间隔时间服从泊松分布
+    /**任务发生次数服从泊松分布*/
     //产生的数值value是符合泊松分布的，均值和方差都是Lamda
     public static void updatePoissonGenerator(double mean){
         intervalRNG = new PoissonDistribution(mean);
@@ -46,6 +50,14 @@ public class Variable {
 
     public static int Poisson_Distribution(){
         return intervalRNG.sample();
+    }
+
+    /**任务时间间隔服从指数分布*/
+    public static void updateExpGenerator (double lambda) {
+        expRNG = new ExponentialDistribution(lambda);
+    }
+    public static int Exp_Distribution(){
+        return (int) Math.ceil(expRNG.sample());
     }
 
 

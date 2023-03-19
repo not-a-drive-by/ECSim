@@ -107,7 +107,7 @@ public class SimManager {
         }else if(orchestratorPolicy.equals("MILP")){
             edgeServerManager.processTasks_MILP(time);
         }else if(orchestratorPolicy.equals("SUAC")){
-            edgeServerManager.processTasks_SJF(time);
+            edgeServerManager.processTasks_FCFS(time);
         }
         System.out.println("节点内资源调度后"+edgeServerManager.getEdgeServersList());
     }

@@ -61,9 +61,9 @@ public class Task implements Serializable {//序列化后才能从文件读出
    }
 
    public int getType(){
-      if( RAM==32 && CPU==2 && storage==1690 ){
+      if( RAM==32 && CPU==8 && storage==1690 ){
          return 1;
-      }else if( RAM==30 && CPU==2 && storage==420 ){
+      }else if( RAM==30 && CPU==4 && storage==420 ){
          return 2;
       }else{
          return 3;

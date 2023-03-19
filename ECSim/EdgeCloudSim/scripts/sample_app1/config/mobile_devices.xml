@@ -9,10 +9,9 @@
 		<Len1>1</Len1>
 		<Len2>2</Len2>
 		<Len3>3</Len3>
-		<costPerBw>0.1</costPerBw>
-		<costPerSec>3.0</costPerSec>
-		<costPerMem>0.05</costPerMem>
-		<costPerStorage>0.1</costPerStorage>
+		<lambda1>0.3</lambda1>
+		<lambda2>0.3</lambda2>
+		<lambda3>0.6</lambda3>
 		<location>
 			<x_pos>30</x_pos>
 			<y_pos>0</y_pos>
@@ -29,10 +28,9 @@
 		<Len1>1</Len1>
 		<Len2>2</Len2>
 		<Len3>3</Len3>
-		<costPerBw>0.1</costPerBw>
-		<costPerSec>3.0</costPerSec>
-		<costPerMem>0.05</costPerMem>
-		<costPerStorage>0.1</costPerStorage>
+		<lambda1>0.3</lambda1>
+		<lambda2>0.3</lambda2>
+		<lambda3>0.6</lambda3>
 		<location>
 			<x_pos>20</x_pos>
 			<y_pos>10</y_pos>
@@ -49,10 +47,9 @@
 		<Len1>1</Len1>
 		<Len2>2</Len2>
 		<Len3>3</Len3>
-		<costPerBw>0.1</costPerBw>
-		<costPerSec>3.0</costPerSec>
-		<costPerMem>0.05</costPerMem>
-		<costPerStorage>0.1</costPerStorage>
+		<lambda1>0.3</lambda1>
+		<lambda2>0.3</lambda2>
+		<lambda3>0.6</lambda3>
 		<location>
 			<x_pos>40</x_pos>
 			<y_pos>12</y_pos>

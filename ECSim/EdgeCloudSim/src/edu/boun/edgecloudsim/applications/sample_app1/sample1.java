@@ -28,7 +28,7 @@ public class sample1 {
 
 
         //时隙大循环
-        for(int t=0; t<1; t++){
+        for(int t=0; t<500; t++){
             StaticfinalTags.curTime++;
             //1. 更新mobileDevice的待处理待发送队列 edgeServer的待处理队列
             simManager.updateQueues(t, scenarioFactory);

@@ -201,13 +201,25 @@ public class EdgeDataCenter {
         //队列任务实际长度
         queueSize[0]=queueSize[1]=queueSize[2]=0;
         for( Task task : queue1 ){
-            queueSize[0] += task.length;
+            if(task.length <= 3 ){
+                queueSize[0] += 1;
+            }else{
+                queueSize[0] += 2;
+            }
         }
         for( Task task : queue2 ){
-            queueSize[1] += task.length;
+            if(task.length <= 3 ){
+                queueSize[1] += 1;
+            }else{
+                queueSize[1] += 2;
+            }
         }
         for( Task task : queue3 ){
-            queueSize[2] += task.length;
+            if(task.length <= 3 ){
+                queueSize[2] += 1;
+            }else{
+                queueSize[2] += 2;
+            }
         }
 
         //找最小

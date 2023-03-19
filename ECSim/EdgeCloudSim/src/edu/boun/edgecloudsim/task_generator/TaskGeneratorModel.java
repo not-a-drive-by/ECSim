@@ -6,6 +6,7 @@
 package edu.boun.edgecloudsim.task_generator;
 
 import edu.boun.edgecloudsim.core.SimSettings;
+import edu.boun.edgecloudsim.utils.StaticfinalTags;
 import edu.boun.edgecloudsim.utils.Variable;
 import org.w3c.dom.Document;
 
@@ -82,30 +83,44 @@ public class TaskGeneratorModel {
             DeviceTaskStatic deviceTaskStatic = MobileDeviceStatic.get(i);
 //            System.out.println(deviceTaskStatic);
             int taskNum = deviceTaskStatic.taskNum;//一个设备的任务总数
+            int sum = 0;
+            Task task;
 
             List<Task> tList = new ArrayList<Task>();//每个设备的任务集合
+
+            sum = 0;
+            Variable.updateParetoGenerator(1, deviceTaskStatic.meanLen1);
+            Variable.updateExpGenerator(1/deviceTaskStatic.lambda1);
             for(int k=0; k< (int) taskNum*deviceTaskStatic.type1Ratio; k++){
-//                tList.add(new Task(deviceTaskStatic.meanLen1, 32, 2, 1690, taskID++, 0.1));
-                tList.add(new Task(r.nextInt(3), 32, 2, 1690, taskID++, 0.1));
-            }
-            Variable.updateParetoGenerator( 0.4, deviceTaskStatic.meanLen2 );
-            for(int k=0; k< (int) taskNum*deviceTaskStatic.type2Ratio; k++){
-                tList.add(new Task(r.nextInt(6), 30, 2, 420, taskID++,0.2));
-            }
-            Variable.updateParetoGenerator( 0.4, deviceTaskStatic.meanLen3 );
-            for(int k=0; k< (int) taskNum*deviceTaskStatic.type3Ratio; k++){
-                tList.add(new Task(r.nextInt(9), 7, 2, 1690, taskID++,0.3));
-            }
-
-            //打乱任务 设置到达时间
-            int sum = 0;
-            Collections.shuffle(tList);
-            for( Task task : tList){
+                task = new Task(Variable.Pareto_Distribution(), 32, 8, 1690, taskID++, 0.1);
+                tList.add(task);
                 task.setArrivalTime(sum);
-                sum += Variable.Pareto_Distribution();
+                sum += Variable.Exp_Distribution();
+
             }
 
-//            Collections.sort(tList, new TaskComparatorByTime());//将任务按达到时间排序
+            sum = 0;
+            Variable.updateParetoGenerator(1, deviceTaskStatic.meanLen2);
+            Variable.updateExpGenerator(1/deviceTaskStatic.lambda2);
+            for(int k=0; k< (int) taskNum*deviceTaskStatic.type2Ratio; k++){
+                task = new Task(Variable.Pareto_Distribution(), 30, 4, 420, taskID++,0.2);
+                tList.add(task);
+                task.setArrivalTime(sum);
+                sum += Variable.Exp_Distribution();
+            }
+
+            sum = 0;
+            Variable.updateParetoGenerator(1, deviceTaskStatic.meanLen3);
+            Variable.updateExpGenerator(1/deviceTaskStatic.lambda3);
+            for(int k=0; k< (int) taskNum*deviceTaskStatic.type3Ratio; k++){
+                task = new Task(Variable.Pareto_Distribution(), 7, 4, 1690, taskID++,0.3);
+                tList.add(task);
+                task.setArrivalTime(sum);
+                sum += Variable.Exp_Distribution();
+            }
+
+
+            Collections.sort(tList, new TaskComparatorByTime());//将任务按达到时间排序
 
             taskList.add(tList);
 

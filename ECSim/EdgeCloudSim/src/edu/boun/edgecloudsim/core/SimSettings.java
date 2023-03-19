@@ -87,12 +87,16 @@ public class SimSettings {
                 int Len1 = Integer.parseInt(mobileDeviceElement.getElementsByTagName("Len1").item(0).getTextContent());
                 int Len2 = Integer.parseInt(mobileDeviceElement.getElementsByTagName("Len2").item(0).getTextContent());
                 int Len3 = Integer.parseInt(mobileDeviceElement.getElementsByTagName("Len3").item(0).getTextContent());
+                double lambda1 = Double.parseDouble(mobileDeviceElement.getElementsByTagName("lambda1").item(0).getTextContent());
+                double lambda2 = Double.parseDouble(mobileDeviceElement.getElementsByTagName("lambda2").item(0).getTextContent());
+                double lambda3 = Double.parseDouble(mobileDeviceElement.getElementsByTagName("lambda3").item(0).getTextContent());
                 Element location = (Element)mobileDeviceElement.getElementsByTagName("location").item(0);
                 double x = Double.parseDouble(location.getElementsByTagName("x_pos").item(0).getTextContent());
                 double y = Double.parseDouble(location.getElementsByTagName("y_pos").item(0).getTextContent());
 
 
-                DeviceTaskStatic userStatic = new DeviceTaskStatic(taskNum,type1Ratio,type2Ratio,type3Ratio,Len1,Len2,Len3,x,y,deviceID);
+                DeviceTaskStatic userStatic = new DeviceTaskStatic(
+                        taskNum,type1Ratio,type2Ratio,type3Ratio,Len1,Len2,Len3,lambda1, lambda2, lambda3,x,y,deviceID);
                 mobileDeviceStatic.add(userStatic);
 
             }

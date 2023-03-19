@@ -3,6 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="18a26140-92e0-43de-8a37-25fa308ba712" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TaskInformation.txt" beforeDir="false" afterPath="$PROJECT_DIR$/TaskInformation.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ECSim _ada/edu/boun/edgecloudsim/task_generator/Task.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ECSim _ada/edu/boun/edgecloudsim/task_generator/Task.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ECSim _ada/edu/boun/edgecloudsim/task_generator/TaskGeneratorModel.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ECSim _ada/edu/boun/edgecloudsim/task_generator/TaskGeneratorModel.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,7 +44,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../Cplex/install/cplex/lib/cplex.jar" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="project.structure.last.edited" value="Libraries" />
     <property name="project.structure.proportion" value="0.0" />
@@ -117,8 +120,8 @@
     <recent_temporary>
       <list>
         <item itemvalue="Application.sample1" />
-        <item itemvalue="Application.test" />
         <item itemvalue="Application.TaskGeneratorModel" />
+        <item itemvalue="Application.test" />
         <item itemvalue="Application.Variable" />
       </list>
     </recent_temporary>
@@ -159,6 +162,11 @@
       <workItem from="1676954914552" duration="207000" />
       <workItem from="1677383086529" duration="686000" />
       <workItem from="1677581525140" duration="12258000" />
+      <workItem from="1679114399536" duration="40000" />
+      <workItem from="1679115478881" duration="665000" />
+      <workItem from="1679120834033" duration="45000" />
+      <workItem from="1679123661954" duration="86000" />
+      <workItem from="1679229046474" duration="10908000" />
     </task>
     <servers />
   </component>
