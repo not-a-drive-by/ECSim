@@ -25,7 +25,7 @@ public class RandomEdgeOrchestrator extends EdgeOrchestrator {
     public void Matching(NetworkModel networkModel){
         for ( Task task : preMatchTasks ){
             if( task.getPreferenceList().size()!=0 ){
-                int ran = r.nextInt( task.getPreferenceList().size() - 1 );
+                int ran = r.nextInt( task.getPreferenceList().size()  );
                 task.setTargetServer(task.getPreferenceList().get(ran));
             }
         }

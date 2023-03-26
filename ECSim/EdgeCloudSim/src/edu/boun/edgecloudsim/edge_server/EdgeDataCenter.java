@@ -26,6 +26,8 @@ public class EdgeDataCenter {
     private double y_pos;
     private int quota;
 
+    public int totalNum = 0;
+
     //SUAC算法需要的最大虚拟机运行数
     public int N_max;
 
@@ -69,7 +71,7 @@ public class EdgeDataCenter {
 
 
     public void updateServerQuota(){
-        quota = 2;
+        quota = 1+ N_max - activeVM.size();
     }
 
     //更新偏好序列
@@ -200,27 +202,31 @@ public class EdgeDataCenter {
 
         //队列任务实际长度
         queueSize[0]=queueSize[1]=queueSize[2]=0;
-        for( Task task : queue1 ){
-            if(task.length <= 3 ){
-                queueSize[0] += 1;
-            }else{
-                queueSize[0] += 2;
-            }
-        }
-        for( Task task : queue2 ){
-            if(task.length <= 3 ){
-                queueSize[1] += 1;
-            }else{
-                queueSize[1] += 2;
-            }
-        }
-        for( Task task : queue3 ){
-            if(task.length <= 3 ){
-                queueSize[2] += 1;
-            }else{
-                queueSize[2] += 2;
-            }
-        }
+        queueSize[0] = queue1.size();
+        queueSize[1] = queue2.size();
+        queueSize[2] = queue3.size();
+
+//        for( Task task : queue1 ){
+//            if(task.length <= 3 ){
+//                queueSize[0] += 1;
+//            }else{
+//                queueSize[0] += 2;
+//            }
+//        }
+//        for( Task task : queue2 ){
+//            if(task.length <= 3 ){
+//                queueSize[1] += 1;
+//            }else{
+//                queueSize[1] += 2;
+//            }
+//        }
+//        for( Task task : queue3 ){
+//            if(task.length <= 3 ){
+//                queueSize[2] += 1;
+//            }else{
+//                queueSize[2] += 2;
+//            }
+//        }
 
         //找最小
         for(int i=0;i<matrix.size();i++)//矩阵中的每一行
@@ -240,13 +246,9 @@ public class EdgeDataCenter {
 
             sumnum = tmpnum[0]+tmpnum[1]+tmpnum[2];
 
-//            qmw[0] = (queuelength[0] - num[0]) * tmpnum[0];
-//            qmw[1] = (queuelength[1] - num[1]) * tmpnum[1];
-//            qmw[2] = (queuelength[2] - num[2]) * tmpnum[2];
-
-            qmw[0] = queueSize[0] * tmpnum[0];
-            qmw[1] = queueSize[1] * tmpnum[1];
-            qmw[2] = queueSize[2] * tmpnum[2];
+            qmw[0] = (queuelength[0] - num[0]) * tmpnum[0];
+            qmw[1] = (queuelength[1] - num[1]) * tmpnum[1];
+            qmw[2] = (queuelength[2] - num[2]) * tmpnum[2];
 
 
             for(int m=0;m<tmpnum[0];m++)//第一类任务在当前时刻完成的总时长和任务数
@@ -265,7 +267,7 @@ public class EdgeDataCenter {
 
             }
             if(sumnum!=0){
-                System.out.println("Lyap计算结果"+(qmw[0]+qmw[1]+qmw[2])+"和"+(pen[0]+pen[1]+pen[2]));
+//                System.out.println("Lyap计算结果"+(qmw[0]+qmw[1]+qmw[2])+"和"+(pen[0]+pen[1]+pen[2]));
                 avedpp[i] = -(qmw[0]+qmw[1]+qmw[2]) + StaticfinalTags.alpha*(pen[0]+pen[1]+pen[2]);
             }else{
                 avedpp[i] = Double.POSITIVE_INFINITY;
@@ -308,6 +310,7 @@ public class EdgeDataCenter {
         while(iteratorVM.hasNext()){
             EdgeVM VM = iteratorVM.next();
             if( VM.getOffTime() <= time ) { //等于还是小于等于取决于循环细粒度
+                totalNum++;
                 //把处理完的任务加入数据统计集合
                 Data.addFinishedTasks(VM.getProcessingTask());
                 //离队
@@ -328,11 +331,7 @@ public class EdgeDataCenter {
             Collections.sort(que, taskLengthComparator);
         }
         ArrayList<int[]> feasableMatrix = createMatrix();
-//        System.out.println("积压情况"+queue1.size()+queue2.size()+queue3.size());
-//        System.out.println("可行矩阵");
-//        for( int[] a : feasableMatrix){
-//            System.out.print(Arrays.toString(a));
-//        }
+
         int[] selectedPolicy = selectPolicy( feasableMatrix, time);
 //        System.out.println("选择了行向量"+Arrays.toString(selectedPolicy));
         createVMs(selectedPolicy, time);
@@ -531,14 +530,9 @@ public class EdgeDataCenter {
 
     @Override
     public String toString() {
-        return "EdgeDataCenter{" +
-                "id=" + id +
-                ", CPU=" + CPU +
-                ", RAM=" + RAM +
-                ", storage=" + storage +
-                ", x_pos=" + x_pos +
-                ", y_pos=" + y_pos + "\r\n" +
-                "avtiveVM" + activeVM +
+        return "EdgeServer id="
+                + id +
+//                "activeVM" + activeVM +
                 '}' + "\r\n";
     }
 }

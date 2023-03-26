@@ -54,13 +54,13 @@ public class DefaultEdgeOrchestrator extends EdgeOrchestrator{
 
         }
         //最后看看匹配结果
-        for(Task t : preMatchTasks){
-            System.out.println(t.taskID + "匹配到了" +t.getTargetServer());
-        }
-        for(EdgeDataCenter edgeServer : EdgeServers){
-            System.out.println(edgeServer.getId()+"接受了"+edgeServer.getReceiveReqFromTasks());
-
-        }
+//        for(Task t : preMatchTasks){
+//            System.out.println(t.taskID + "匹配到了" +t.getTargetServer());
+//        }
+//        for(EdgeDataCenter edgeServer : EdgeServers){
+//            System.out.println(edgeServer.getId()+"接受了"+edgeServer.getReceiveReqFromTasks());
+//
+//        }
     }
 
     //无聊函数

@@ -27,6 +27,13 @@ public class TaskGeneratorModel {
     private static int _MobileDeviceNum;
     public static ArrayList<DeviceTaskStatic> _mobileDeviceStatic = new ArrayList<>();
 
+    private static int lenLower = 5;
+    private static int lenUpper = 10;
+
+    private static double shape1 = 1.6;
+    private static double shape2 = 1.6;
+    private static double shape3 = 1.6;
+
     public static void main(String[] args) throws IOException,ClassNotFoundException {
         SS.init(mobileDevicesFile);
         _MobileDeviceNum = SS.MobileDeviceNum;
@@ -89,34 +96,34 @@ public class TaskGeneratorModel {
             List<Task> tList = new ArrayList<Task>();//每个设备的任务集合
 
             sum = 0;
-            Variable.updateParetoGenerator(1, deviceTaskStatic.meanLen1);
-            Variable.updateExpGenerator(1/deviceTaskStatic.lambda1);
+            Variable.updateParetoGenerator(shape1, deviceTaskStatic.meanLen1);
             for(int k=0; k< (int) taskNum*deviceTaskStatic.type1Ratio; k++){
-                task = new Task(Variable.Pareto_Distribution(), 32, 8, 1690, taskID++, 0.1);
+                task = new Task(Variable.Pareto_Distribution(), 32, 8, 1690,
+                        taskID++, lenLower+r.nextInt(lenUpper));
                 tList.add(task);
                 task.setArrivalTime(sum);
-                sum += Variable.Exp_Distribution();
+                sum += Variable.expRnd(StaticfinalTags.lambda1);
 
             }
 
             sum = 0;
-            Variable.updateParetoGenerator(1, deviceTaskStatic.meanLen2);
-            Variable.updateExpGenerator(1/deviceTaskStatic.lambda2);
+            Variable.updateParetoGenerator(shape2, deviceTaskStatic.meanLen2);
             for(int k=0; k< (int) taskNum*deviceTaskStatic.type2Ratio; k++){
-                task = new Task(Variable.Pareto_Distribution(), 30, 4, 420, taskID++,0.2);
+                task = new Task(Variable.Pareto_Distribution(), 30, 4, 420,
+                        taskID++,lenLower+r.nextInt(lenUpper));
                 tList.add(task);
                 task.setArrivalTime(sum);
-                sum += Variable.Exp_Distribution();
+                sum += Variable.expRnd(StaticfinalTags.lambda2);
             }
 
             sum = 0;
-            Variable.updateParetoGenerator(1, deviceTaskStatic.meanLen3);
-            Variable.updateExpGenerator(1/deviceTaskStatic.lambda3);
+            Variable.updateParetoGenerator(shape3, deviceTaskStatic.meanLen3);
             for(int k=0; k< (int) taskNum*deviceTaskStatic.type3Ratio; k++){
-                task = new Task(Variable.Pareto_Distribution(), 7, 4, 1690, taskID++,0.3);
+                task = new Task(Variable.Pareto_Distribution(), 7, 4, 1690,
+                        taskID++,lenLower+r.nextInt(lenUpper));
                 tList.add(task);
                 task.setArrivalTime(sum);
-                sum += Variable.Exp_Distribution();
+                sum += Variable.expRnd(StaticfinalTags.lambda3);
             }
 
 

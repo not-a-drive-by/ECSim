@@ -10,6 +10,7 @@ import edu.boun.edgecloudsim.edge_server.EdgeServerManager;
 import edu.boun.edgecloudsim.mobility.MobilityModel;
 import edu.boun.edgecloudsim.network.Channel;
 import edu.boun.edgecloudsim.network.NetworkModel;
+import edu.boun.edgecloudsim.utils.StaticfinalTags;
 
 public class SimManager {
     private String simScenario;
@@ -62,15 +63,17 @@ public class SimManager {
     public void updateQueues(int t, ScenarioFactory scenarioFactory){
         //1.更新移动设备的待处理队列
         mobileDeviceManager.updateUnprocessedQueues(t);
-        System.out.println("在时刻"+ t + "更新队列后:" + "\r\n");
-        System.out.println(mobileDeviceManager.getMobileDevicesList());
+//        System.out.println("在时刻"+ t + "更新队列后:" + "\r\n");
+//        System.out.println(mobileDeviceManager.getMobileDevicesList());
 
     }
 
     public void updateChannel(){
         //每个时隙信道重置为未使用过
         for(Channel channel : networkModel.getChannelsList()){
-            channel.updateRatio();
+            if(StaticfinalTags.curTime % StaticfinalTags.ratioItv == 0){
+                channel.updateRatio();
+            }
             channel.usedFlag = false;
         }
     }
@@ -83,7 +86,7 @@ public class SimManager {
         }else {
             mobileDeviceManager.updateAll(edgeServerManager, edgeOrchestrator);
         }
-        System.out.println("待匹配任务集合"+edgeOrchestrator.getPreMatchTasks());
+//        System.out.println("待匹配任务集合"+edgeOrchestrator.getPreMatchTasks());
     }
 
 
@@ -95,7 +98,7 @@ public class SimManager {
             mobileDeviceManager.updateTransQueue(networkModel);
         }
 
-        System.out.println("更新传输队列后"+mobileDeviceManager.getMobileDevicesList());
+//        System.out.println("更新传输队列后"+mobileDeviceManager.getMobileDevicesList());
 
     }
 
@@ -103,13 +106,13 @@ public class SimManager {
         if(orchestratorPolicy.equals("Matching")){
             edgeServerManager.processTasks_Lyap(time);
         }else if(orchestratorPolicy.equals("Random")){
-            edgeServerManager.processTasks_Lyap(time);
+            edgeServerManager.processTasks_FCFS(time);
         }else if(orchestratorPolicy.equals("MILP")){
             edgeServerManager.processTasks_MILP(time);
         }else if(orchestratorPolicy.equals("SUAC")){
             edgeServerManager.processTasks_FCFS(time);
         }
-        System.out.println("节点内资源调度后"+edgeServerManager.getEdgeServersList());
+//        System.out.println("节点内资源调度后"+edgeServerManager.getEdgeServersList());
     }
 
     public void shutdownEntity(){

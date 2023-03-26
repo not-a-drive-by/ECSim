@@ -4,6 +4,7 @@ import edu.boun.edgecloudsim.core.ScenarioFactory;
 import edu.boun.edgecloudsim.core.SimManager;
 import edu.boun.edgecloudsim.core.SimSettings;
 import edu.boun.edgecloudsim.edge_client.MobileDeviceManager;
+import edu.boun.edgecloudsim.edge_server.EdgeDataCenter;
 import edu.boun.edgecloudsim.statistic.Data;
 import edu.boun.edgecloudsim.utils.StaticfinalTags;
 
@@ -17,9 +18,9 @@ public class sample1 {
                 "ECSim/EdgeCloudSim/scripts/sample_app1/config/edge_servers.xml");
 
 //        String orchestratorPolicy = "Matching";
-//        String orchestratorPolicy = "Random";
+        String orchestratorPolicy = "Random";
 //        String orchestratorPolicy = "MILP";
-        String orchestratorPolicy = "SUAC";
+//        String orchestratorPolicy = "SUAC";
 
         //创建实体类集合类
         ScenarioFactory scenarioFactory = new SampleScenarioFactory(orchestratorPolicy);
@@ -28,7 +29,7 @@ public class sample1 {
 
 
         //时隙大循环
-        for(int t=0; t<500; t++){
+        for(int t=0; t<1024; t++){
             StaticfinalTags.curTime++;
             //1. 更新mobileDevice的待处理待发送队列 edgeServer的待处理队列
             simManager.updateQueues(t, scenarioFactory);
@@ -43,14 +44,17 @@ public class sample1 {
             //6. 根据匹配结果开始传输数据包
             simManager.transmitteTasks();
             //7. edgeServer开始进行资源调度
-//            for(double tt=t-1; t<t+1; t+=0.2){
-//
-//            }
             simManager.processTask(t);
         }
 
         //输出统计结果
+        System.out.println(Data.finishedTasks);
+
         System.out.println( "完成了" + Data.getFinishedTaskSum() + "个任务，平均时延" + Data.overallDelay()  );
+
+        for(EdgeDataCenter server: simManager.getEdgeServerManager().getEdgeServersList()){
+            System.out.print(server.totalNum + " ");
+        }
 
         //结束
         simManager.shutdownEntity();

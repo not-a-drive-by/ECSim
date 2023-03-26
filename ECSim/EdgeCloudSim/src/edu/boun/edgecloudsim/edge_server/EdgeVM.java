@@ -40,7 +40,6 @@ public class EdgeVM {
     @Override
     public String toString() {
         return "EdgeVM{" +
-                "processingTask=" + processingTask +
                 ", offTime=" + offTime +
                 '}';
     }

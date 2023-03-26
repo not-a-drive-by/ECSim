@@ -3,6 +3,7 @@ package edu.boun.edgecloudsim.mobility;
 import edu.boun.edgecloudsim.edge_client.MobileDevice;
 import edu.boun.edgecloudsim.edge_client.MobileDeviceManager;
 import edu.boun.edgecloudsim.edge_server.EdgeServerManager;
+import edu.boun.edgecloudsim.utils.StaticfinalTags;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,18 +26,19 @@ public class MobilityModel {
 
     public void generateLocation( MobileDevice mobileDevice ){
         int direction = r.nextInt(4); //取值范围是[0,bound-1]
+        double velocity = StaticfinalTags.velocity;
         switch (direction){
             case 0:
-                mobileDevice.setY( mobileDevice.getY() + 1 );
+                mobileDevice.setY( mobileDevice.getY() + velocity );
                 break;
             case 1:
-                mobileDevice.setY( mobileDevice.getY() - 1 );
+                mobileDevice.setY( mobileDevice.getY() - velocity );
                 break;
             case 2:
-                mobileDevice.setX( mobileDevice.getX() - 1 );
+                mobileDevice.setX( mobileDevice.getX() - velocity );
                 break;
             case 3:
-                mobileDevice.setX( mobileDevice.getX() + 1 );
+                mobileDevice.setX( mobileDevice.getX() + velocity );
                 break;
         }
     }

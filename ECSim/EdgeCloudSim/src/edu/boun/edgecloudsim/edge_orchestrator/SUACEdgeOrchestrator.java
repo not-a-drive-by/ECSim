@@ -25,7 +25,7 @@ public class SUACEdgeOrchestrator extends EdgeOrchestrator{
 
         if( m != 0 && c!= 0) {
             try {
-                System.out.print("进来了"+m+" "+c);
+//                System.out.print("进来了"+m+" "+c);
                 /** 声明cplex优化模型 */
                 IloCplex cplex = new IloCplex();
 
@@ -46,7 +46,7 @@ public class SUACEdgeOrchestrator extends EdgeOrchestrator{
                     }
                     EdgeDataCenter server = EdgeServers.get(i);
 
-                    double K = 7*20/2/server.N_max; //session length不知道咋定
+                    double K = 7*5/2/server.N_max; //session length不知道咋定
                     double Ms =server.activeVM.size() - server.N_max + server.getQueueLength();
                     double ps = server.getQueueLength() + 0.3*( K*( 2*Ms + 1) - 300);
 
@@ -84,12 +84,12 @@ public class SUACEdgeOrchestrator extends EdgeOrchestrator{
                 /** 根据结果处理 */
                 for (int i = 0; i < m; i++) { //task
                     for (int j = 0; j < c; j++) { //server
-                        System.out.print("x" +(i+1)+ (j+1) + "  = " + val[i][j]+"  ");
+//                        System.out.print("x" +(i+1)+ (j+1) + "  = " + val[i][j]+"  ");
                         if (val[i][j] == 1.0) {
                             preMatchTasks.get(i).setTargetServer(EdgeServers.get(j));
                         }
                     }
-                    System.out.println(" ");
+//                    System.out.println(" ");
                 }
 
 

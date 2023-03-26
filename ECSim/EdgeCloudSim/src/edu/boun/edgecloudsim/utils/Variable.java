@@ -10,9 +10,10 @@ import org.apache.commons.math3.random.Well19937c;
 
 public class Variable {
 
+    public static Random r = new Random();
     public static ParetoDistribution taskLenRNG = new ParetoDistribution();
     public static PoissonDistribution intervalRNG = new PoissonDistribution(2);
-    public static ExponentialDistribution expRNG = new ExponentialDistribution(2);
+    public static ExponentialDistribution expRNG = new ExponentialDistribution(0.5);
 
     //信道增益中 信道参数 指数分布
     public static int expRnd (double lambda) {
@@ -29,8 +30,12 @@ public class Variable {
     }
 
     //任务长度服从帕累托分布
-    public static void updateParetoGenerator(double Xmin, double mean){
-        double shape = mean / ( mean - Xmin );
+//    public static void updateParetoGenerator(double Xmin, double mean){
+//        double shape = mean / ( mean - Xmin );
+//        taskLenRNG = new ParetoDistribution( Xmin, shape);
+//    }
+    public static void updateParetoGenerator(double shape, double mean){
+        double Xmin = mean * ( shape - 1 ) / shape ;
         taskLenRNG = new ParetoDistribution( Xmin, shape);
     }
     public static int Pareto_Distribution(){
@@ -59,12 +64,15 @@ public class Variable {
     public static int Exp_Distribution(){
         return (int) Math.ceil(expRNG.sample());
     }
+    public static double Exp_Channel() {
+        return 0.5+expRNG.sample();
+    }
 
 
     public static void main(String[] args) {
-        updateParetoGenerator(0.1, 1);
+        updateParetoGenerator(1.4, 2);
         for (int i=0; i<50; i++){
-            System.out.println(Pareto_Distribution());
+            System.out.println(r.nextInt(3));
         }
     }
 

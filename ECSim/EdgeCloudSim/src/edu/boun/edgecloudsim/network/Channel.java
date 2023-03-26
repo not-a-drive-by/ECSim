@@ -29,9 +29,9 @@ public class Channel {
     //更新信道传输速率
     public void updateRatio(){
         distance = getDistance();
-        double channelGain = Variable.expRnd(1)*Math.pow(distance,-2);
+        double channelGain = Variable.Exp_Channel()*Math.pow(distance,-3.5);
         double SINR = channelGain*mobileDevice.getPower()/Math.pow(10,-9);
-        this.ratio = Math.log(1+SINR)/Math.log(2);
+        this.ratio = Math.log(1+SINR)/(6.5*Math.log(2));
     }
 
     //一些没啥用的函数

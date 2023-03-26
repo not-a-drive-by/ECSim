@@ -21,7 +21,6 @@ public class DeviceTaskStatic {
 
     public DeviceTaskStatic(int taskNum, double type1Ratio, double type2Ratio, double type3Ratio,
                             int meanLen1, int meanLen2, int meanLen3,
-                            double lambda1, double lambda2, double lambda3,
                             double x, double y, int deviceID) {
         this.taskNum = taskNum;
         this.deviceID = deviceID;
@@ -31,9 +30,6 @@ public class DeviceTaskStatic {
         this.meanLen1 = meanLen1;
         this.meanLen2 = meanLen2;
         this.meanLen3 = meanLen3;
-        this.lambda1 = lambda1;
-        this.lambda2 = lambda2;
-        this.lambda3 = lambda3;
         this.x_pos = x;
         this.y_pos = y;
     }

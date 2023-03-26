@@ -2,59 +2,128 @@
 <mobile_devices>
 	<user>
 		<userID>1001</userID>
-		<taskNum>100</taskNum>
+		<taskNum>320</taskNum>
 		<type1Ratio>0.3</type1Ratio>
 		<type2Ratio>0.3</type2Ratio>
 		<type3Ratio>0.4</type3Ratio>
-		<Len1>1</Len1>
-		<Len2>2</Len2>
-		<Len3>3</Len3>
-		<lambda1>0.3</lambda1>
-		<lambda2>0.3</lambda2>
-		<lambda3>0.6</lambda3>
+		<Len1>4</Len1>
+		<Len2>4</Len2>
+		<Len3>4</Len3>
 		<location>
-			<x_pos>30</x_pos>
-			<y_pos>0</y_pos>
-			<wlan_id>0</wlan_id>
-			<attractiveness>0</attractiveness>
+		<!--密集-->
+			<x_pos>70</x_pos>
+			<y_pos>60</y_pos>
+			<!--稀疏-->
+<!--			<x_pos>120</x_pos>-->
+<!--			<y_pos>60</y_pos>-->
 		</location>
 	</user>
 	<user>
 		<userID>1002</userID>
-		<taskNum>100</taskNum>
+		<taskNum>320</taskNum>
 		<type1Ratio>0.3</type1Ratio>
 		<type2Ratio>0.3</type2Ratio>
 		<type3Ratio>0.4</type3Ratio>
-		<Len1>1</Len1>
-		<Len2>2</Len2>
-		<Len3>3</Len3>
-		<lambda1>0.3</lambda1>
-		<lambda2>0.3</lambda2>
-		<lambda3>0.6</lambda3>
+		<Len1>4</Len1>
+		<Len2>4</Len2>
+		<Len3>4</Len3>
 		<location>
-			<x_pos>20</x_pos>
-			<y_pos>10</y_pos>
-			<wlan_id>0</wlan_id>
-			<attractiveness>0</attractiveness>
+			<!--密集-->
+<!--			<x_pos>70</x_pos>-->
+<!--			<y_pos>40</y_pos>-->
+			<!--稀疏-->
+			<x_pos>60</x_pos>
+			<y_pos>0</y_pos>
 		</location>
 	</user>
 	<user>
 		<userID>1003</userID>
-		<taskNum>100</taskNum>
+		<taskNum>320</taskNum>
 		<type1Ratio>0.3</type1Ratio>
 		<type2Ratio>0.3</type2Ratio>
 		<type3Ratio>0.4</type3Ratio>
-		<Len1>1</Len1>
-		<Len2>2</Len2>
-		<Len3>3</Len3>
-		<lambda1>0.3</lambda1>
-		<lambda2>0.3</lambda2>
-		<lambda3>0.6</lambda3>
+		<Len1>4</Len1>
+		<Len2>4</Len2>
+		<Len3>4</Len3>
 		<location>
-			<x_pos>40</x_pos>
-			<y_pos>12</y_pos>
-			<wlan_id>0</wlan_id>
-			<attractiveness>0</attractiveness>
+			<!--密集-->
+			<x_pos>60</x_pos>
+			<y_pos>50</y_pos>
+			<!--稀疏-->
+<!--			<x_pos>0</x_pos>-->
+<!--			<y_pos>60</y_pos>-->
+		</location>
+	</user>
+	<user>
+		<userID>1004</userID>
+		<taskNum>320</taskNum>
+		<type1Ratio>0.3</type1Ratio>
+		<type2Ratio>0.3</type2Ratio>
+		<type3Ratio>0.4</type3Ratio>
+		<Len1>4</Len1>
+		<Len2>4</Len2>
+		<Len3>4</Len3>
+		<location>
+			<!--密集-->
+			<x_pos>50</x_pos>
+			<y_pos>50</y_pos>
+			<!--稀疏-->
+<!--			<x_pos>60</x_pos>-->
+<!--			<y_pos>120</y_pos>-->
+		</location>
+	</user>
+	<user>
+		<userID>1005</userID>
+		<taskNum>320</taskNum>
+		<type1Ratio>0.3</type1Ratio>
+		<type2Ratio>0.3</type2Ratio>
+		<type3Ratio>0.4</type3Ratio>
+		<Len1>4</Len1>
+		<Len2>4</Len2>
+		<Len3>4</Len3>
+		<location>
+			<!--密集-->
+			<x_pos>50</x_pos>
+			<y_pos>60</y_pos>
+			<!--稀疏-->
+<!--			<x_pos>90</x_pos>-->
+<!--			<y_pos>90</y_pos>-->
+		</location>
+	</user>
+	<user>
+		<userID>1006</userID>
+		<taskNum>320</taskNum>
+		<type1Ratio>0.3</type1Ratio>
+		<type2Ratio>0.3</type2Ratio>
+		<type3Ratio>0.4</type3Ratio>
+		<Len1>4</Len1>
+		<Len2>4</Len2>
+		<Len3>4</Len3>
+		<location>
+			<!--密集-->
+			<x_pos>50</x_pos>
+			<y_pos>70</y_pos>
+			<!--稀疏-->
+<!--			<x_pos>90</x_pos>-->
+<!--			<y_pos>30</y_pos>-->
+		</location>
+	</user>
+	<user>
+		<userID>1007</userID>
+		<taskNum>320</taskNum>
+		<type1Ratio>0.3</type1Ratio>
+		<type2Ratio>0.3</type2Ratio>
+		<type3Ratio>0.4</type3Ratio>
+		<Len1>4</Len1>
+		<Len2>4</Len2>
+		<Len3>4</Len3>
+		<location>
+			<!--密集-->
+			<x_pos>60</x_pos>
+			<y_pos>70</y_pos>
+			<!--稀疏-->
+<!--			<x_pos>30</x_pos>-->
+<!--			<y_pos>30</y_pos>-->
 		</location>
 	</user>
 </mobile_devices>

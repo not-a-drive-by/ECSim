@@ -11,6 +11,7 @@ import edu.boun.edgecloudsim.edge_client.MobileDevice;
 import edu.boun.edgecloudsim.edge_server.EdgeDataCenter;
 import edu.boun.edgecloudsim.network.Channel;
 import edu.boun.edgecloudsim.network.NetworkModel;
+import edu.boun.edgecloudsim.utils.StaticfinalTags;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -31,6 +32,8 @@ public class Task implements Serializable {//序列化后才能从文件读出
    public int taskID;
    public MobileDevice device;
    public int arrivalTime;
+   public int arriveClTime = -1;
+   public double transRatio;
 
    //处理完后设置
    public double finishTime = -1;//若为-1则未完成
@@ -75,37 +78,80 @@ public class Task implements Serializable {//序列化后才能从文件读出
       Collections.sort( preferenceList, new ServerPreferenceComparator() );
    }
 
+
    //对服务器按偏好排序
    public class ServerPreferenceComparator implements Comparator<EdgeDataCenter>
    {
-//      public int compare(EdgeDataCenter s1, EdgeDataCenter s2)
-//      {
-//         return (s1.getId() - s2.getId());
-//      }
+
       public int compare(EdgeDataCenter s1, EdgeDataCenter s2)
       {
          Channel cha1 = networkModel.serachChannelByDeviceandServer(device.getMobileID(), s1.getId());
          Channel cha2 = networkModel.serachChannelByDeviceandServer(device.getMobileID(), s2.getId());
-         int[] remainresource1 = s1.returnRemainResource();
-         int resource1 = 0;
-         for(int i=0; i<3; i++){
-            resource1 += remainresource1[i];
-         }
-         int[] remainresource2 = s2.returnRemainResource();
-         int resource2 = 0;
-         for(int i=0; i<3; i++){
-            resource2 += remainresource2[i];
-         }
-         double len1 = s1.getQueue().get(getType()-1).size()==0 ? 0.5 : s1.getQueue().get(getType()-1).size();
-         double len2 = s2.getQueue().get(getType()-1).size()==0 ? 0.5 :s2.getQueue().get(getType()-1).size();
-         double score1 = cha1.ratio*resource1/len1;
-         double score2 = cha2.ratio*resource2/len2;
 
-         if(score1 >= score2 ) {
+         /**传输的时延*/
+         double transQueTime_1 = 0;
+         double transQueTime_2 = 0;
+         for(Task t : device.transQueue ){
+            if( t.arriveClTime!=-1 && t.targetServer==s1){
+               transQueTime_1 += t.arriveClTime - StaticfinalTags.curTime;
+//               transQueTime_1 += 1;
+            }
+         }
+         for(Task t : device.transQueue ){
+            if( t.arriveClTime!=-1 && t.targetServer==s2){
+               transQueTime_2 += t.arriveClTime - StaticfinalTags.curTime;
+//               transQueTime_2 += 1;
+            }
+         }
+         double transTime_1 = dataSize/cha1.ratio;
+         double transTime_2 = dataSize/cha2.ratio;
+
+
+         /**服务器端的时延*/
+         double queuingTime_1 = 0;
+         double queuingTime_2 = 0;
+         List<Task> correspQue1 = s1.getQueue().get(getType()-1);
+         List<Task> correspQue2 = s2.getQueue().get(getType()-1);
+         for(Task t : correspQue1){
+            queuingTime_1 += t.length;
+         }
+         for(Task t : correspQue2){
+            queuingTime_2 += t.length;
+         }
+
+         /**服务器端的资源影响*/
+
+         double score1 = transQueTime_1 + transTime_1 + queuingTime_1;
+         double score2 = transQueTime_2 + transTime_2 + queuingTime_2;
+
+         //越小越好
+         if(score1 <= score2 ) {
             return -1;
          }else{
             return 0;
          }
+
+
+//         int[] remainresource1 = s1.returnRemainResource();
+//         int[] remainresource2 = s2.returnRemainResource();
+//         int resource1 = 0;
+//         for(int i=0; i<3; i++){
+//            resource1 += remainresource1[i];
+//         }
+//         int resource2 = 0;
+//         for(int i=0; i<3; i++){
+//            resource2 += remainresource2[i];
+//         }
+//         double len1 = s1.getQueue().get(getType()-1).size()==0 ? 0.5 : s1.getQueue().get(getType()-1).size();
+//         double len2 = s2.getQueue().get(getType()-1).size()==0 ? 0.5 :s2.getQueue().get(getType()-1).size();
+//         double score1 = cha1.ratio*resource1/len1;
+//         double score2 = cha2.ratio*resource2/len2;
+//
+//         if(score1 >= score2 ) {
+//            return -1;
+//         }else{
+//            return 0;
+//         }
       }
    }
 
@@ -137,14 +183,12 @@ public class Task implements Serializable {//序列化后才能从文件读出
    @Override
    public String toString() {
       return "Task{" +
-              "length=" + length +
-              ", RAM=" + RAM +
-              ", CPU=" + CPU +
-              ", storage=" + storage +
-              ", taskID=" + taskID +
-              ", dataSize=" + dataSize +
-              ", arrive at:" + arrivalTime +
-//              ", aim at:" + targetServer+
+              "l=" + length +
+              ", daSize=" + dataSize +
+              ", arrive:" + arrivalTime +
+              ", ClTime:" + arriveClTime +
+              ", ratio：" + transRatio +
+              ", aim:" + targetServer+
               '}' + "\r\n";
    }
 }
